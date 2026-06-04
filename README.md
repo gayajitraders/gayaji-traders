@@ -1,5 +1,7 @@
 # Gaya Ji Traders - Premium Home & Kitchen Appliances Hub
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/gayajitraders/gayaji-traders)
+
 Gaya Ji Traders is a modern, high-performance E-Commerce application designed to sell premium electronics, smart TVs, kitchen appliances, and home utilities. The codebase includes a robust Node.js/Express backend, an interactive single-page application (SPA) frontend built with vanilla HTML5, CSS3, and JavaScript, and advanced security configurations.
 
 ---

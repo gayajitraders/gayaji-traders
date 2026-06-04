@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gayaji-traders
+    env: docker
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+        placeholder: "Optional: Paste your MongoDB Atlas URI here to persist data across restarts"
