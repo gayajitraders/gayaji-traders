@@ -1,0 +1,347 @@
+[
+  {
+    "_id": "1780501335665vcovv",
+    "createdAt": "2026-06-03T15:42:15.665Z",
+    "userId": "1780480397097of2zk",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 17805013356638atml",
+    "read": true,
+    "type": "order",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:42:51.882Z"
+  },
+  {
+    "_id": "1780501335667kvzch",
+    "createdAt": "2026-06-03T15:42:15.667Z",
+    "userId": "admin",
+    "message": "New order placed by Gaya Ji Admin for ₹38999. Order ID: 17805013356638atml",
+    "read": true,
+    "type": "order",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "17805013826898lc09",
+    "createdAt": "2026-06-03T15:43:02.689Z",
+    "userId": "1780480397097of2zk",
+    "message": "Delivery personnel Ramesh Kumar (Delivery) has been assigned to your order.",
+    "read": true,
+    "type": "delivery",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:42:51.882Z"
+  },
+  {
+    "_id": "1780501382690d6kpo",
+    "createdAt": "2026-06-03T15:43:02.690Z",
+    "userId": "1780480397279tflh2",
+    "message": "New delivery task assigned! Deliver to: Gaya Ji Admin, Order ID: 17805013356638atml",
+    "read": false,
+    "type": "delivery",
+    "orderId": "17805013356638atml"
+  },
+  {
+    "_id": "1780501388679vmf5d",
+    "createdAt": "2026-06-03T15:43:08.679Z",
+    "userId": "1780480397097of2zk",
+    "message": "Your order status has been updated to: Shipped.",
+    "read": true,
+    "type": "order",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:42:51.882Z"
+  },
+  {
+    "_id": "1780502251110t9amt",
+    "createdAt": "2026-06-03T15:57:31.110Z",
+    "userId": "1780480397097of2zk",
+    "message": "Your order status has been updated to: Cancelled.",
+    "read": true,
+    "type": "order",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:42:51.882Z"
+  },
+  {
+    "_id": "1780507109200bvme1",
+    "createdAt": "2026-06-03T17:18:29.200Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780507109192xmjkd",
+    "read": false,
+    "type": "order",
+    "orderId": "1780507109192xmjkd"
+  },
+  {
+    "_id": "1780507109203sm397",
+    "createdAt": "2026-06-03T17:18:29.203Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780507109192xmjkd",
+    "read": true,
+    "type": "order",
+    "orderId": "1780507109192xmjkd",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "1780507120331gthsa",
+    "createdAt": "2026-06-03T17:18:40.331Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780507120328nfgkr",
+    "read": false,
+    "type": "order",
+    "orderId": "1780507120328nfgkr"
+  },
+  {
+    "_id": "1780507120336vd6h5",
+    "createdAt": "2026-06-03T17:18:40.336Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780507120328nfgkr",
+    "read": true,
+    "type": "order",
+    "orderId": "1780507120328nfgkr",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "1780507120360g5rzr",
+    "createdAt": "2026-06-03T17:18:40.360Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order #1780507120328nfgkr has been cancelled successfully. Refund (if paid online) will be processed.",
+    "read": false,
+    "type": "order",
+    "orderId": "1780507120328nfgkr"
+  },
+  {
+    "_id": "17805071203647w7oy",
+    "createdAt": "2026-06-03T17:18:40.364Z",
+    "userId": "admin",
+    "message": "Order #1780507120328nfgkr was cancelled by the customer Amit Sharma.",
+    "read": true,
+    "type": "order",
+    "orderId": "1780507120328nfgkr",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "1780507120381ocur6",
+    "createdAt": "2026-06-03T17:18:40.381Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780507120378v0tds",
+    "read": false,
+    "type": "order",
+    "orderId": "1780507120378v0tds"
+  },
+  {
+    "_id": "1780507120386awug2",
+    "createdAt": "2026-06-03T17:18:40.386Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780507120378v0tds",
+    "read": true,
+    "type": "order",
+    "orderId": "1780507120378v0tds",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "1780508019984rjz8k",
+    "createdAt": "2026-06-03T17:33:39.984Z",
+    "userId": "1780480397097of2zk",
+    "message": "Your order for ₹139993 has been placed successfully. Order ID: 17805080199814w3yr",
+    "read": true,
+    "type": "order",
+    "orderId": "17805080199814w3yr",
+    "updatedAt": "2026-06-03T17:42:51.882Z"
+  },
+  {
+    "_id": "1780508019986d4pa3",
+    "createdAt": "2026-06-03T17:33:39.986Z",
+    "userId": "admin",
+    "message": "New order placed by Gaya Ji Admin for ₹139993. Order ID: 17805080199814w3yr",
+    "read": true,
+    "type": "order",
+    "orderId": "17805080199814w3yr",
+    "updatedAt": "2026-06-03T17:42:51.878Z"
+  },
+  {
+    "_id": "1780508093815pabra",
+    "createdAt": "2026-06-03T17:34:53.815Z",
+    "userId": "1780480397097of2zk",
+    "message": "Your order status has been updated to: Pending.",
+    "read": true,
+    "type": "order",
+    "orderId": "17805013356638atml",
+    "updatedAt": "2026-06-03T17:43:05.485Z"
+  },
+  {
+    "_id": "17805410644556yki2",
+    "createdAt": "2026-06-04T02:44:24.456Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 17805410644545oos0",
+    "read": false,
+    "type": "order",
+    "orderId": "17805410644545oos0"
+  },
+  {
+    "_id": "17805410644575gitw",
+    "createdAt": "2026-06-04T02:44:24.457Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 17805410644545oos0",
+    "read": false,
+    "type": "order",
+    "orderId": "17805410644545oos0"
+  },
+  {
+    "_id": "17805410644737s6we",
+    "createdAt": "2026-06-04T02:44:24.473Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order #17805410644545oos0 has been cancelled successfully. Refund (if paid online) will be processed.",
+    "read": false,
+    "type": "order",
+    "orderId": "17805410644545oos0"
+  },
+  {
+    "_id": "1780541064475czhbz",
+    "createdAt": "2026-06-04T02:44:24.476Z",
+    "userId": "admin",
+    "message": "Order #17805410644545oos0 was cancelled by the customer Amit Sharma.",
+    "read": false,
+    "type": "order",
+    "orderId": "17805410644545oos0"
+  },
+  {
+    "_id": "17805410644894mrmx",
+    "createdAt": "2026-06-04T02:44:24.489Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780541064487pfzyx",
+    "read": false,
+    "type": "order",
+    "orderId": "1780541064487pfzyx"
+  },
+  {
+    "_id": "17805410644913to4q",
+    "createdAt": "2026-06-04T02:44:24.491Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780541064487pfzyx",
+    "read": false,
+    "type": "order",
+    "orderId": "1780541064487pfzyx"
+  },
+  {
+    "_id": "17805422861314ifdm",
+    "createdAt": "2026-06-04T03:04:46.131Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780542286129yd1ty",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286129yd1ty"
+  },
+  {
+    "_id": "1780542286133xp564",
+    "createdAt": "2026-06-04T03:04:46.133Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780542286129yd1ty",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286129yd1ty"
+  },
+  {
+    "_id": "1780542286148q6akv",
+    "createdAt": "2026-06-04T03:04:46.148Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order #1780542286129yd1ty has been cancelled successfully. Refund (if paid online) will be processed.",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286129yd1ty"
+  },
+  {
+    "_id": "17805422861518lqb8",
+    "createdAt": "2026-06-04T03:04:46.151Z",
+    "userId": "admin",
+    "message": "Order #1780542286129yd1ty was cancelled by the customer Amit Sharma.",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286129yd1ty"
+  },
+  {
+    "_id": "1780542286161npim3",
+    "createdAt": "2026-06-04T03:04:46.161Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 1780542286159x1n2m",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286159x1n2m"
+  },
+  {
+    "_id": "1780542286162b72i6",
+    "createdAt": "2026-06-04T03:04:46.162Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 1780542286159x1n2m",
+    "read": false,
+    "type": "order",
+    "orderId": "1780542286159x1n2m"
+  },
+  {
+    "_id": "1780542780029aso4o",
+    "createdAt": "2026-06-04T03:13:00.029Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 17805427800264pa4n",
+    "read": false,
+    "type": "order",
+    "orderId": "17805427800264pa4n"
+  },
+  {
+    "_id": "178054278003101uos",
+    "createdAt": "2026-06-04T03:13:00.031Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 17805427800264pa4n",
+    "read": false,
+    "type": "order",
+    "orderId": "17805427800264pa4n"
+  },
+  {
+    "_id": "1780542780041xuvke",
+    "createdAt": "2026-06-04T03:13:00.041Z",
+    "userId": "17804803974962er0w",
+    "message": "Delivery personnel Ramesh Kumar (Delivery) has been assigned to your order.",
+    "read": false,
+    "type": "delivery",
+    "orderId": "17805427800264pa4n"
+  },
+  {
+    "_id": "1780542780043uzeg8",
+    "createdAt": "2026-06-04T03:13:00.043Z",
+    "userId": "1780480397279tflh2",
+    "message": "New delivery task assigned! Deliver to: Amit Sharma, Order ID: 17805427800264pa4n",
+    "read": false,
+    "type": "delivery",
+    "orderId": "17805427800264pa4n"
+  },
+  {
+    "_id": "17805454559582c10s",
+    "createdAt": "2026-06-04T03:57:35.958Z",
+    "userId": "17804803974962er0w",
+    "message": "Your order for ₹38999 has been placed successfully. Order ID: 17805454559535sfvw",
+    "read": false,
+    "type": "order",
+    "orderId": "17805454559535sfvw"
+  },
+  {
+    "_id": "1780545455962x1ji5",
+    "createdAt": "2026-06-04T03:57:35.962Z",
+    "userId": "admin",
+    "message": "New order placed by Amit Sharma for ₹38999. Order ID: 17805454559535sfvw",
+    "read": false,
+    "type": "order",
+    "orderId": "17805454559535sfvw"
+  },
+  {
+    "_id": "1780545455976njkel",
+    "createdAt": "2026-06-04T03:57:35.976Z",
+    "userId": "17804803974962er0w",
+    "message": "Delivery personnel Ramesh Kumar (Delivery) has been assigned to your order.",
+    "read": false,
+    "type": "delivery",
+    "orderId": "17805454559535sfvw"
+  },
+  {
+    "_id": "1780545455979cg6wc",
+    "createdAt": "2026-06-04T03:57:35.979Z",
+    "userId": "1780480397279tflh2",
+    "message": "New delivery task assigned! Deliver to: Amit Sharma, Order ID: 17805454559535sfvw",
+    "read": false,
+    "type": "delivery",
+    "orderId": "17805454559535sfvw"
+  }
+]

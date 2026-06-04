@@ -1,0 +1,66 @@
+[
+  {
+    "_id": "1780480397097of2zk",
+    "createdAt": "2026-06-03T09:53:17.097Z",
+    "name": "Gaya Ji Admin",
+    "email": "admin@gayaji.com",
+    "phone": "6207342872",
+    "passwordHash": "$2a$10$PIqp7mMxVqfgrR9bec9qE.eP2CSWCS7dHJaQN2RVcgIuGLzHtN3eK",
+    "role": "admin",
+    "addresses": [
+      {
+        "id": "addr_1780501333681",
+        "name": "shubham kumar",
+        "phone": "8572930475",
+        "addressLine": "hhgso gayab fifyoye",
+        "city": "Gaya",
+        "state": "Bihar",
+        "pincode": "823001",
+        "isDefault": true
+      }
+    ],
+    "updatedAt": "2026-06-04T03:57:35.783Z"
+  },
+  {
+    "_id": "1780480397279tflh2",
+    "createdAt": "2026-06-03T09:53:17.279Z",
+    "name": "Ramesh Kumar (Delivery)",
+    "email": "delivery@gayaji.com",
+    "phone": "8765432109",
+    "passwordHash": "$2a$10$GHlCLH1ZEWOTXThU1oVA1eB7WOqxTJhXnvj5UvLvAlVAPO0URhOKS",
+    "role": "delivery",
+    "addresses": []
+  },
+  {
+    "_id": "17804803974962er0w",
+    "createdAt": "2026-06-03T09:53:17.496Z",
+    "name": "Amit Sharma",
+    "email": "amit@gmail.com",
+    "phone": "7654321098",
+    "passwordHash": "$2a$10$GHlCLH1ZEWOTXThU1oVA1el7mTrnCxhaiwLANmUuduuy2dfKzVvZG",
+    "role": "customer",
+    "addresses": [
+      {
+        "id": "addr1",
+        "name": "Amit Sharma",
+        "addressLine": "12, GB Road, Near Vishnupad Temple",
+        "city": "Gaya",
+        "state": "Bihar",
+        "pincode": "823001",
+        "phone": "7654321098",
+        "isDefault": true
+      }
+    ],
+    "updatedAt": "2026-06-04T03:04:52.990Z"
+  },
+  {
+    "_id": "1780500203227tvjsk",
+    "createdAt": "2026-06-03T15:23:23.227Z",
+    "name": "harshit kumar",
+    "email": "hk620734@gmail.com",
+    "phone": "6207342872",
+    "passwordHash": "$2a$10$bAEDdtLhinYVXg21maUAl.HTkB68L7eMKLdRiE5I7GWbtgruOid9.",
+    "role": "customer",
+    "addresses": []
+  }
+]

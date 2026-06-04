@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "1780480397536x51hi",
+    "createdAt": "2026-06-03T09:53:17.536Z",
+    "code": "WELCOME10",
+    "type": "percent",
+    "value": 10,
+    "minPurchase": 500,
+    "expiryDate": "2026-07-03T09:53:17.535Z",
+    "active": true
+  },
+  {
+    "_id": "17804803975400a8fh",
+    "createdAt": "2026-06-03T09:53:17.540Z",
+    "code": "GAYAJI200",
+    "type": "flat",
+    "value": 200,
+    "minPurchase": 1500,
+    "expiryDate": "2026-07-03T09:53:17.539Z",
+    "active": true
+  },
+  {
+    "_id": "1780502473840sksnb",
+    "createdAt": "2026-06-03T16:01:13.840Z",
+    "code": "GAYAJI230",
+    "type": "percent",
+    "value": 10,
+    "minPurchase": 3000,
+    "expiryDate": "2026-06-05T00:00:00.000Z",
+    "active": true
+  }
+]

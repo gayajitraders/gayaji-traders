@@ -1,0 +1,150 @@
+[
+  {
+    "_id": "17805013356638atml",
+    "createdAt": "2026-06-03T15:42:15.663Z",
+    "customerId": "1780480397097of2zk",
+    "customerName": "Gaya Ji Admin",
+    "customerEmail": "admin@gayaji.com",
+    "phone": "9876543210",
+    "address": {
+      "id": "addr_1780501333681",
+      "name": "shubham kumar",
+      "phone": "8572930475",
+      "addressLine": "hhgso gayab fifyoye",
+      "city": "Gaya",
+      "state": "Bihar",
+      "pincode": "823001",
+      "isDefault": true
+    },
+    "items": [
+      {
+        "productId": "1780500697766zqfwi",
+        "name": "Premium Double-Door Smart Refrigerator (450L)",
+        "price": 38999,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 38999,
+    "discount": 0,
+    "couponCode": null,
+    "total": 38999,
+    "paymentMode": "COD",
+    "paymentStatus": "Pending",
+    "paymentTransactionId": null,
+    "orderStatus": "Pending",
+    "deliveryBoyId": "1780480397279tflh2",
+    "deliveryBoyName": "Ramesh Kumar (Delivery)",
+    "trackingHistory": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-06-03T15:42:15.663Z",
+        "comment": "Thank you for shopping with Gaya Ji Traders!"
+      },
+      {
+        "status": "Assigned for Delivery",
+        "timestamp": "2026-06-03T15:43:02.686Z",
+        "comment": "Order assigned to delivery personnel Ramesh Kumar (Delivery)"
+      },
+      {
+        "status": "Shipped",
+        "timestamp": "2026-06-03T15:43:08.676Z",
+        "comment": "Status updated to Shipped"
+      },
+      {
+        "status": "Cancelled",
+        "timestamp": "2026-06-03T15:57:31.108Z",
+        "comment": "Status updated to Cancelled"
+      },
+      {
+        "status": "Pending",
+        "timestamp": "2026-06-03T17:34:53.812Z",
+        "comment": "Status updated to Pending"
+      }
+    ],
+    "updatedAt": "2026-06-03T17:34:53.812Z"
+  },
+  {
+    "_id": "1780507109192xmjkd",
+    "createdAt": "2026-06-03T17:18:29.192Z",
+    "customerId": "17804803974962er0w",
+    "customerName": "Amit Sharma",
+    "customerEmail": "amit@gmail.com",
+    "phone": "7654321098",
+    "address": {
+      "name": "Amit Sharma",
+      "addressLine": "12, GB Road, Near Vishnupad Temple",
+      "city": "Gaya",
+      "state": "Bihar",
+      "pincode": "823001",
+      "phone": "7654321098"
+    },
+    "items": [
+      {
+        "productId": "1780507089375ewy0g",
+        "name": "Premium Double-Door Smart Refrigerator (450L)",
+        "price": 38999,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 38999,
+    "discount": 0,
+    "couponCode": null,
+    "total": 38999,
+    "paymentMode": "COD",
+    "paymentStatus": "Pending",
+    "paymentTransactionId": null,
+    "orderStatus": "Pending",
+    "deliveryBoyId": null,
+    "deliveryBoyName": null,
+    "trackingHistory": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-06-03T17:18:29.190Z",
+        "comment": "Thank you for shopping with Gaya Ji Traders!"
+      }
+    ]
+  },
+  {
+    "_id": "17805080199814w3yr",
+    "createdAt": "2026-06-03T17:33:39.981Z",
+    "customerId": "1780480397097of2zk",
+    "customerName": "Gaya Ji Admin",
+    "customerEmail": "admin@gayaji.com",
+    "phone": "9876543210",
+    "address": {
+      "id": "addr_1780501333681",
+      "name": "shubham kumar",
+      "phone": "8572930475",
+      "addressLine": "hhgso gayab fifyoye",
+      "city": "Gaya",
+      "state": "Bihar",
+      "pincode": "823001",
+      "isDefault": true
+    },
+    "items": [
+      {
+        "productId": "1780507089389t6mgl",
+        "name": "Smart Robotic Vacuum Cleaner with Mop",
+        "price": 19999,
+        "quantity": 7
+      }
+    ],
+    "subtotal": 139993,
+    "discount": 0,
+    "couponCode": null,
+    "total": 139993,
+    "paymentMode": "COD",
+    "paymentStatus": "Pending",
+    "paymentTransactionId": null,
+    "orderStatus": "Pending",
+    "deliveryBoyId": null,
+    "deliveryBoyName": null,
+    "trackingHistory": [
+      {
+        "status": "Order Placed",
+        "timestamp": "2026-06-03T17:33:39.979Z",
+        "comment": "Thank you for shopping with Gaya Ji Traders!"
+      }
+    ]
+  }
+]

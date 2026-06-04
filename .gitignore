@@ -4,11 +4,11 @@ frontend/node_modules/
 .antigravity-ide/
 .gemini/
 *.log
-backend/data/*.json
 .DS_Store
 .env
 .env.*
 .vscode/
 .idea/
 tunnel.bat
+
 
