@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaya Ji Traders - Premium Quality Home & Kitchen Appliances</title>
+  <meta name="description" content="Shop premium smart televisions, double-door refrigerators, digital air fryers, washing machines, and smart living electronics at Gaya Ji Traders. High-quality appliances delivered directly to your doorstep in Gaya.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Vanilla CSS Link -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span>✨ Use code <strong>WELCOME10</strong> for 10% off on orders above ₹500! Free delivery in Gaya city.</span>
+    <div class="announcement-right">
+      <button id="theme-toggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <a href="#shop" class="logo" id="logo-link">
+        <div class="logo-icon logo-gt">GT</div>
+        <div class="logo-text">
+          <h1>Gaya Ji</h1>
+          <span>TRADERS</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#shop" class="nav-item active"><i class="fa-solid fa-store"></i> Shop</a>
+        
+        <!-- Customer Routes -->
+        <a href="#orders" class="nav-item customer-only d-none"><i class="fa-solid fa-box-open"></i> My Orders</a>
+        <a href="#profile" class="nav-item customer-only d-none"><i class="fa-solid fa-user-gear"></i> Profile</a>
+
+        <!-- Admin Routes -->
+        <a href="#admin" class="nav-item admin-only d-none"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+
+        <!-- Delivery Routes -->
+        <a href="#delivery" class="nav-item delivery-only d-none"><i class="fa-solid fa-truck-ramp-box"></i> Deliveries</a>
+      </nav>
+
+      <!-- Search and Actions Group -->
+      <div class="header-actions">
+        <!-- Search bar (Only shown on shop page, but here for structural header layout) -->
+        <div class="search-box-container" id="header-search-container">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="global-search" placeholder="Search premium appliances, TVs...">
+        </div>
+
+        <!-- Notification Bell -->
+        <div class="action-btn-wrapper notification-wrapper">
+          <button id="notification-bell" class="action-btn" title="Notifications">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge d-none" id="notif-badge">0</span>
+          </button>
+          
+          <!-- Notification Dropdown -->
+          <div class="notification-dropdown d-none" id="notification-dropdown">
+            <div class="notif-header">
+              <h3>Notifications</h3>
+              <button id="mark-all-read-btn">Mark all read</button>
+            </div>
+            <div class="notif-list" id="notif-list">
+              <!-- Dynamically populated -->
+              <div class="notif-empty">No new notifications</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wishlist Icon -->
+        <button id="wishlist-toggle-btn" class="action-btn wishlist-btn" title="View Wishlist">
+          <i class="fa-solid fa-heart"></i>
+          <span class="badge" id="wishlist-badge">0</span>
+        </button>
+
+        <!-- Shopping Cart Icon -->
+        <button id="cart-toggle-btn" class="action-btn cart-btn" title="View Cart">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span class="badge" id="cart-badge">0</span>
+          <span class="cart-total-header d-none-mobile">₹0</span>
+        </button>
+
+        <!-- User Accounts Dropdown/Trigger -->
+        <div class="user-menu-wrapper">
+          <button id="user-menu-trigger" class="user-btn">
+            <span class="avatar-placeholder" id="user-avatar-initials">U</span>
+            <span class="user-name-text d-none-mobile" id="user-display-name">Guest</span>
+            <i class="fa-solid fa-chevron-down arrow"></i>
+          </button>
+          
+          <div class="user-dropdown d-none" id="user-dropdown">
+            <!-- Guest options -->
+            <div class="guest-group" id="user-guest-menu">
+              <a href="#login" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+              <a href="#register" class="dropdown-item"><i class="fa-solid fa-user-plus"></i> Register</a>
+            </div>
+            <!-- Authenticated options -->
+            <div class="auth-group d-none" id="user-auth-menu">
+              <div class="user-profile-summary">
+                <strong id="dropdown-full-name">Name</strong>
+                <span id="dropdown-role" class="role-badge">Customer</span>
+              </div>
+              <hr>
+              <a href="#profile" class="dropdown-item customer-only"><i class="fa-solid fa-id-card"></i> Manage Addresses</a>
+              <a href="#orders" class="dropdown-item customer-only"><i class="fa-solid fa-clock-rotate-left"></i> Order History</a>
+              <a href="#admin" class="dropdown-item admin-only d-none"><i class="fa-solid fa-sliders"></i> Admin Control Panel</a>
+              <a href="#delivery" class="dropdown-item delivery-only d-none"><i class="fa-solid fa-truck"></i> Delivery Panel</a>
+              <hr>
+              <button id="logout-btn" class="dropdown-item text-danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slider Sidebar Shopping Cart -->
+  <div class="cart-drawer-overlay d-none" id="cart-overlay"></div>
+  <aside class="cart-drawer d-none" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h2><i class="fa-solid fa-basket-shopping"></i> Your Basket (<span id="cart-count">0</span>)</h2>
+      <button class="close-cart-btn" id="close-cart-btn">&times;</button>
+    </div>
+
+    <!-- Basket Items Container -->
+    <div class="cart-drawer-body" id="cart-items-container">
+      <!-- Dynamically filled -->
+      <div class="cart-empty-state">
+        <i class="fa-solid fa-cart-flatbed-suitcases"></i>
+        <p>Your basket is empty!</p>
+        <a href="#shop" class="btn btn-primary" id="start-shopping-btn">Start Shopping</a>
+      </div>
+    </div>
+
+    <!-- Cart Footer Calculations -->
+    <div class="cart-drawer-footer d-none" id="cart-footer">
+      <div class="cart-footer-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">₹0</span>
+      </div>
+      
+      <!-- Coupon Section -->
+      <div class="coupon-section">
+        <div class="coupon-input-group">
+          <input type="text" id="coupon-input" placeholder="Enter coupon code" autocomplete="off">
+          <button id="apply-coupon-btn">Apply</button>
+        </div>
+        <div id="coupon-message" class="coupon-message"></div>
+        <div class="active-coupon-badge d-none" id="active-coupon-badge">
+          <span><i class="fa-solid fa-tag"></i> <strong id="applied-code-text">WELCOME10</strong> applied</span>
+          <button id="remove-coupon-btn">&times;</button>
+        </div>
+      </div>
+
+      <div class="cart-footer-row text-success d-none" id="discount-row">
+        <span>Discount</span>
+        <span id="cart-discount">-₹0</span>
+      </div>
+
+      <div class="cart-footer-row">
+        <span>Delivery Fee</span>
+        <span id="cart-delivery" class="text-success">FREE</span>
+      </div>
+      
+      <hr>
+
+      <div class="cart-footer-row grand-total">
+        <span>Total Amount</span>
+        <strong id="cart-grand-total">₹0</strong>
+      </div>
+
+      <button id="checkout-btn" class="btn btn-block btn-success mt-4">
+        Proceed to Checkout <i class="fa-solid fa-circle-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Slider Sidebar Wishlist -->
+  <div class="wishlist-drawer-overlay d-none" id="wishlist-overlay"></div>
+  <aside class="wishlist-drawer d-none" id="wishlist-drawer">
+    <div class="wishlist-drawer-header">
+      <h2><i class="fa-solid fa-heart text-danger"></i> Your Wishlist (<span id="wishlist-count">0</span>)</h2>
+      <button class="close-wishlist-btn" id="close-wishlist-btn">&times;</button>
+    </div>
+
+    <!-- Wishlist Items Container -->
+    <div class="wishlist-drawer-body" id="wishlist-items-container">
+      <!-- Dynamically filled -->
+      <div class="wishlist-empty-state">
+        <i class="fa-solid fa-heart-crack"></i>
+        <p>Your wishlist is empty!</p>
+        <button class="btn btn-primary" id="wishlist-start-shopping-btn">Start Shopping</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Workspaces (SPA Routes Router Container) -->
+  <main class="app-main-content">
+    
+    <!-- SECTION 1: Shop View -->
+    <section id="view-shop" class="spa-view">
+      <!-- Hero Banner Banner -->
+      <div class="shop-hero">
+        <div class="hero-content">
+          <span class="badge-hero">⚡ Gaya Ji's Premium Electronics Hub</span>
+          <h2>Premium Home & Kitchen Appliances</h2>
+          <p>Upgrade your home with high-performance kitchen appliances and smart home systems. Engineered for efficiency, built for durability, and delivered fast to your doorstep in Gaya city.</p>
+          <a href="#shop" class="btn btn-accent btn-lg" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior: 'smooth'})">
+            Explore Appliances <i class="fa-solid fa-arrow-down"></i>
+          </a>
+        </div>
+        <div class="hero-decorative-image">
+          <i class="fa-solid fa-plug-circle-bolt"></i>
+        </div>
+      </div>
+
+      <div id="catalog-anchor"></div>
+
+      <!-- Categories & Filters Bar -->
+      <div class="catalog-filters-bar">
+        <div class="category-tabs" id="category-tabs">
+          <button class="category-tab active" data-category="all">All Items</button>
+          <button class="category-tab" data-category="kitchen appliances">Kitchen Appliances</button>
+          <button class="category-tab" data-category="home appliances">Home Appliances</button>
+          <button class="category-tab" data-category="smart living">Smart Living</button>
+        </div>
+        <div class="catalog-sort">
+          <label for="sort-select">Sort By:</label>
+          <select id="sort-select">
+            <option value="default">Popularity</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid-container">
+        <!-- Spinner while loading -->
+        <div class="loading-spinner-container" id="shop-loader">
+          <div class="spinner"></div>
+          <p>Loading Gaya Ji fresh inventory...</p>
+        </div>
+
+        <div class="products-grid d-none" id="products-list">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="no-products-found d-none" id="shop-empty-state">
+          <i class="fa-solid fa-magnifying-glass-minus"></i>
+          <h3>No products found</h3>
+          <p>Try refining your search terms or selecting another category.</p>
+          <button class="btn btn-outline" id="reset-filters-btn">Clear Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Product Detail View -->
+    <section id="view-product-details" class="spa-view d-none">
+      <div class="back-nav">
+        <a href="#shop" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+      </div>
+      
+      <div class="product-details-container" id="product-details-container">
+        <!-- Dynamically loaded product details -->
+        <div class="loading-spinner-container">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Login View -->
+    <section id="view-login" class="spa-view d-none">
+      <div class="auth-card-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h2>Welcome Back</h2>
+            <p>Login to manage orders, get discounts, and check order statuses.</p>
+          </div>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="login-email" required placeholder="name@domain.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="login-password" required placeholder="••••••••">
+              </div>
+            </div>
+            <div class="auth-error-msg d-none" id="login-error">Invalid credentials</div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+              Sign In <i class="fa-solid fa-right-to-bracket"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <span>New to Gaya Ji Traders? <a href="#register">Create an account</a></span>
+            <div class="demo-logins">
+              <p>Demo accounts (click to fill):</p>
+              <div class="demo-buttons">
+                <button class="btn-demo-fill" data-email="amit@gmail.com" data-pass="customer123">Customer</button>
+                <button class="btn-demo-fill" data-email="admin@gayaji.com" data-pass="admin123">Admin</button>
+                <button class="btn-demo-fill" data-email="delivery@gayaji.com" data-pass="delivery123">Delivery Boy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Register View -->
+    <section id="view-register" class="spa-view d-none">
+      <div class="auth-card-container">
+        <div class="auth-card">
+          <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Register as a Gaya Ji customer and experience seamless delivery.</p>
+          </div>
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-name">Full Name</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="register-name" required placeholder="Amit Kumar">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email Address</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="register-email" required placeholder="amit@gmail.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-phone">Phone Number</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-phone"></i>
+                <input type="tel" id="register-phone" required placeholder="9876543210" pattern="[0-9]{10}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password</label>
+              <div class="input-icon-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="register-password" required placeholder="Choose a password (min 6 chars)" minlength="6">
+              </div>
+            </div>
+            <div class="auth-error-msg d-none" id="register-error">Error making account</div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+              Register <i class="fa-solid fa-user-plus"></i>
+            </button>
+          </form>
+          <div class="auth-footer">
+            <span>Already have an account? <a href="#login">Sign In</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Checkout View -->
+    <section id="view-checkout" class="spa-view d-none">
+      <h2 class="section-title"><i class="fa-solid fa-cash-register text-success"></i> Checkout Order</h2>
+      
+      <div class="checkout-grid">
+        <!-- Left: Address & Payment forms -->
+        <div class="checkout-details-panel">
+          
+          <!-- Address Selection Card -->
+          <div class="checkout-step-card">
+            <h3><span class="step-num">1</span> Delivery Address</h3>
+            
+            <div class="address-selector-container">
+              <!-- List of Saved Addresses -->
+              <div id="checkout-saved-addresses" class="checkout-addresses-list">
+                <!-- Loaded dynamically -->
+              </div>
+
+              <div class="address-actions-row">
+                <button type="button" class="btn btn-sm btn-outline" id="show-add-address-btn">
+                  <i class="fa-solid fa-plus"></i> Add New Address
+                </button>
+              </div>
+
+              <!-- Add Address Form (Hidden by default) -->
+              <form id="checkout-add-address-form" class="checkout-sub-form d-none">
+                <h4>Add New Delivery Address</h4>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label for="addr-name">Receiver Name</label>
+                    <input type="text" id="addr-name" required placeholder="Amit Sharma">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="addr-phone">Phone Number</label>
+                    <input type="tel" id="addr-phone" required placeholder="9876543210" pattern="[0-9]{10}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="addr-line">Street Address / P.O. Box</label>
+                  <input type="text" id="addr-line" required placeholder="H.No. 45, Near Vishnupad Temple, GB Road">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <label for="addr-city">City</label>
+                    <input type="text" id="addr-city" required value="Gaya">
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="addr-state">State</label>
+                    <input type="text" id="addr-state" required value="Bihar">
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="addr-pincode">Pincode</label>
+                    <input type="text" id="addr-pincode" required placeholder="823001" pattern="[0-9]{6}">
+                  </div>
+                </div>
+                <div class="form-buttons">
+                  <button type="submit" class="btn btn-sm btn-success">Save Address</button>
+                  <button type="button" class="btn btn-sm btn-outline" id="cancel-add-address-btn">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Payment Methods Card -->
+          <div class="checkout-step-card mt-4">
+            <h3><span class="step-num">2</span> Payment Method</h3>
+            <div class="payment-method-selector">
+              
+              <label class="payment-option-label selected">
+                <input type="radio" name="payment-method" value="COD" checked>
+                <div class="payment-option-content">
+                  <div class="payment-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                  <div class="payment-text">
+                    <strong>Cash On Delivery (COD)</strong>
+                    <span>Pay at your door. Cash, UPI scan, or Card.</span>
+                  </div>
+                </div>
+              </label>
+
+              <label class="payment-option-label">
+                <input type="radio" name="payment-method" value="Online">
+                <div class="payment-option-content">
+                  <div class="payment-icon"><i class="fa-solid fa-credit-card"></i></div>
+                  <div class="payment-text">
+                    <strong>Pay Online Now</strong>
+                    <span>Fast checkout using QR Code, UPI, or Cards.</span>
+                  </div>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Checkout summary -->
+        <div class="checkout-summary-panel">
+          <div class="summary-card">
+            <h3>Order Summary</h3>
+            <hr>
+            
+            <div class="checkout-items-list" id="checkout-items-list">
+              <!-- Dynamically populated -->
+            </div>
+
+            <hr>
+
+            <div class="summary-calc-rows">
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="checkout-subtotal">₹0</span>
+              </div>
+              <div class="summary-row text-success d-none" id="checkout-discount-row">
+                <span>Coupon Applied (<strong id="checkout-coupon-code"></strong>)</span>
+                <span id="checkout-discount">-₹0</span>
+              </div>
+              <div class="summary-row">
+                <span>Delivery Charges</span>
+                <span class="text-success">FREE</span>
+              </div>
+              <hr>
+              <div class="summary-row total-row">
+                <span>Total Payable</span>
+                <strong id="checkout-grand-total">₹0</strong>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-block btn-success btn-lg mt-4" id="place-order-btn">
+              Place Order <i class="fa-solid fa-circle-check"></i>
+            </button>
+            <p class="terms-warning-text">By clicking place order, you agree to our express grocery delivery terms in Gaya city.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Customer Order History & Timeline -->
+    <section id="view-orders" class="spa-view d-none">
+      <h2 class="section-title"><i class="fa-solid fa-receipt text-warning"></i> Order History</h2>
+
+      <div class="orders-list-wrapper">
+        <div id="orders-loader" class="loading-spinner-container">
+          <div class="spinner"></div>
+          <p>Fetching your past orders...</p>
+        </div>
+
+        <div id="customer-orders-list" class="customer-orders-list d-none">
+          <!-- Dynamically filled -->
+        </div>
+
+        <div id="orders-empty-state" class="orders-empty-state d-none">
+          <i class="fa-solid fa-boxes-packing"></i>
+          <h3>No orders placed yet</h3>
+          <p>Browse our catalog and place your first order today!</p>
+          <a href="#shop" class="btn btn-primary">Start Shopping</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: User Profile Management -->
+    <section id="view-profile" class="spa-view d-none">
+      <h2 class="section-title"><i class="fa-solid fa-user-circle text-primary"></i> Profile & Address Settings</h2>
+      
+      <div class="profile-layout-grid">
+        <div class="profile-sidebar-card">
+          <div class="profile-summary-box">
+            <div class="profile-avatar-big" id="profile-avatar-big">AM</div>
+            <h3 id="profile-display-name">Amit Sharma</h3>
+            <span class="role-badge" id="profile-display-role">Customer</span>
+          </div>
+          <div class="profile-contact-details">
+            <div class="contact-row">
+              <i class="fa-solid fa-envelope"></i>
+              <div>
+                <small>Email</small>
+                <span id="profile-display-email">amit@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-row">
+              <i class="fa-solid fa-phone"></i>
+              <div>
+                <small>Phone Number</small>
+                <span id="profile-display-phone">7654321098</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-details-panel">
+          <div class="card">
+            <div class="card-header">
+              <h3>Saved Shipping Addresses</h3>
+            </div>
+            <div class="card-body">
+              <div id="profile-addresses-container" class="profile-addresses-list">
+                <!-- Dynamically filled -->
+              </div>
+              
+              <hr class="my-4">
+              
+              <!-- Inline Add Address Form -->
+              <form id="profile-add-address-form" class="profile-inline-form">
+                <h4>Add New Address</h4>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label for="prof-addr-name">Receiver Full Name</label>
+                    <input type="text" id="prof-addr-name" required placeholder="Amit Sharma">
+                  </div>
+                  <div class="form-group col-6">
+                    <label for="prof-addr-phone">Receiver Phone Number</label>
+                    <input type="tel" id="prof-addr-phone" required placeholder="9876543210" pattern="[0-9]{10}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="prof-addr-line">Street Address / Landmark</label>
+                  <input type="text" id="prof-addr-line" required placeholder="12, GB Road, Near Vishnupad Temple">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <label for="prof-addr-city">City</label>
+                    <input type="text" id="prof-addr-city" required value="Gaya">
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="prof-addr-state">State</label>
+                    <input type="text" id="prof-addr-state" required value="Bihar">
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="prof-addr-pincode">Pincode</label>
+                    <input type="text" id="prof-addr-pincode" required placeholder="823001" pattern="[0-9]{6}">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-2">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Address
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Admin Dashboard -->
+    <section id="view-admin" class="spa-view d-none">
+      <h2 class="section-title"><i class="fa-solid fa-chess-king text-accent"></i> Admin Control Dashboard</h2>
+
+      <!-- Admin Stats Section Widgets -->
+      <div class="admin-stats-grid" id="admin-stats-widgets">
+        <div class="stat-card">
+          <div class="stat-icon bg-success-light"><i class="fa-solid fa-indian-rupee-sign text-success"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Total Revenue</span>
+            <strong class="stat-val" id="admin-stat-sales">₹0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-primary-light"><i class="fa-solid fa-cart-shopping text-primary"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Completed Orders</span>
+            <strong class="stat-val" id="admin-stat-completed">0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-warning-light"><i class="fa-solid fa-hourglass-half text-warning"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Active Orders</span>
+            <strong class="stat-val" id="admin-stat-pending">0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-danger-light"><i class="fa-solid fa-triangle-exclamation text-danger"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Low Stock Items</span>
+            <strong class="stat-val text-danger" id="admin-stat-lowstock">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Admin Panel Sub-Sections Tabs -->
+      <div class="admin-tabs-container mt-4">
+        <div class="admin-tabs-header">
+          <button class="admin-tab-btn active" data-admin-tab="admin-tab-orders"><i class="fa-solid fa-clipboard-list"></i> Orders Management</button>
+          <button class="admin-tab-btn" data-admin-tab="admin-tab-products"><i class="fa-solid fa-boxes-stacked"></i> Inventory CRUD</button>
+          <button class="admin-tab-btn" data-admin-tab="admin-tab-coupons"><i class="fa-solid fa-ticket"></i> Coupons Manager</button>
+          <button class="admin-tab-btn" data-admin-tab="admin-tab-analytics"><i class="fa-solid fa-chart-column"></i> Analytics Reports</button>
+          <button class="admin-tab-btn" data-admin-tab="admin-tab-settings"><i class="fa-solid fa-gears"></i> Access Rights</button>
+        </div>
+
+        <div class="admin-tabs-body">
+          
+          <!-- Admin Tab 1: Orders -->
+          <div class="admin-tab-content" id="admin-tab-orders">
+            <div class="admin-tab-title-row">
+              <h3>Customer Orders</h3>
+              <div class="filter-group">
+                <label for="admin-order-status-filter">Filter Status:</label>
+                <select id="admin-order-status-filter">
+                  <option value="all">All Orders</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table" id="admin-orders-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Pay</th>
+                    <th>Order Date</th>
+                    <th>Payment Status</th>
+                    <th>Delivery Boy</th>
+                    <th>Order Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-orders-list">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Admin Tab 2: Products -->
+          <div class="admin-tab-content d-none" id="admin-tab-products">
+            <div class="admin-tab-title-row">
+              <h3>Inventory Products</h3>
+              <button class="btn btn-success btn-sm" id="btn-add-product-modal"><i class="fa-solid fa-plus"></i> Add New Product</button>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock Qty</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-products-list">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Admin Tab 3: Coupons -->
+          <div class="admin-tab-content d-none" id="admin-tab-coupons">
+            <div class="admin-tab-coupon-layout">
+              <!-- Left: Coupon Creator Form -->
+              <div class="card p-4">
+                <h4>Create Coupon Code</h4>
+                <form id="admin-add-coupon-form" class="mt-3">
+                  <div class="form-group">
+                    <label for="coup-code">Coupon Code</label>
+                    <input type="text" id="coup-code" placeholder="e.g. SPECIAL30" required class="text-uppercase">
+                  </div>
+                  <div class="form-group">
+                    <label for="coup-type">Discount Type</label>
+                    <select id="coup-type" required>
+                      <option value="percent">Percent Discount (%)</option>
+                      <option value="flat">Flat Amount Discount (₹)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="coup-value">Discount Value</label>
+                    <input type="number" id="coup-value" placeholder="e.g. 15 for 15% or 200 for ₹200" required min="1">
+                  </div>
+                  <div class="form-group">
+                    <label for="coup-min">Min Purchase Requirement (₹)</label>
+                    <input type="number" id="coup-min" value="0" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label for="coup-expiry">Expiry Date</label>
+                    <input type="date" id="coup-expiry">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block mt-3">
+                    <i class="fa-solid fa-circle-check"></i> Generate Coupon
+                  </button>
+                </form>
+              </div>
+
+              <!-- Right: Coupon Listing -->
+              <div class="card p-4">
+                <h4>Active Coupons</h4>
+                <div class="admin-table-container mt-3">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Code</th>
+                        <th>Discount</th>
+                        <th>Min Cart</th>
+                        <th>Expires</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-coupons-list">
+                      <!-- Dynamically populated -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Tab 4: Analytics -->
+          <div class="admin-tab-content d-none" id="admin-tab-analytics">
+            <h3>Revenue & Financial Reports</h3>
+            
+            <div class="analytics-charts-grid mt-4">
+              <!-- Payment Channels -->
+              <div class="card p-4">
+                <h4>Sales Channel Share</h4>
+                <div class="summary-breakdown-list mt-3">
+                  <div class="summary-breakdown-item">
+                    <span>Cash on Delivery (COD)</span>
+                    <strong id="analytics-cod-sales">₹0</strong>
+                  </div>
+                  <div class="summary-breakdown-item">
+                    <span>Paid Online</span>
+                    <strong id="analytics-online-sales">₹0</strong>
+                  </div>
+                  <hr>
+                  <div class="summary-breakdown-item">
+                    <span>Valuation of Warehouse Stock</span>
+                    <strong id="analytics-inventory-cost">₹0</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sales Over Time (Visualized as a list/table and custom bar heights) -->
+              <div class="card p-4">
+                <h4>Daily Sales Timeline</h4>
+                <div class="sales-bar-chart" id="sales-bar-chart">
+                  <!-- Bars generated dynamically in CSS -->
+                </div>
+                <div class="admin-table-container mt-3">
+                  <table class="admin-table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Daily Sales Volume</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-sales-by-day-list">
+                      <!-- Dynamically populated -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-tab-content d-none" id="admin-tab-settings">
+            <div class="admin-settings-layout" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; align-items: start;">
+              
+              <!-- Business Settings Card -->
+              <div class="card p-4">
+                <h3><i class="fa-solid fa-briefcase text-primary"></i> Business & Payout Credentials</h3>
+                <p class="text-muted small mt-1">Configure your bank account details and UPI QR code to receive customer payments.</p>
+                
+                <form id="admin-settings-form" class="mt-4">
+                  <div class="form-group">
+                    <label for="setting-account-number">Bank Account Number</label>
+                    <input type="text" id="setting-account-number" placeholder="Enter bank account number" required class="form-control">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="setting-phone">Merchant Phone Number</label>
+                    <input type="tel" id="setting-phone" placeholder="9876543210" required pattern="[0-9]{10}" class="form-control">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Merchant UPI QR Code</label>
+                    <div class="image-upload-wrapper mt-2">
+                      <div class="image-upload-zone" id="setting-qr-upload-zone" style="height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--border-color); border-radius: var(--radius-md); cursor: pointer; transition: border-color 0.2s; background: var(--bg-primary);">
+                        <i class="fa-solid fa-qrcode" style="font-size: 2rem; color: var(--primary);"></i>
+                        <span class="small mt-2">Upload UPI QR Code image</span>
+                        <input type="file" id="setting-qr-image-file" accept="image/*" style="display:none">
+                      </div>
+                      <div class="image-upload-preview d-none" id="setting-qr-preview-container" style="position: relative; max-width: 150px; margin: auto;">
+                        <img src="" id="setting-qr-preview-img" alt="QR Preview" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <button type="button" class="btn-remove-preview" id="btn-remove-qr-preview" style="position: absolute; top: -5px; right: -5px; width: 22px; height: 22px; border-radius: 50%; background: var(--danger); color: white; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">&times;</button>
+                      </div>
+                    </div>
+                    <input type="hidden" id="setting-qr-code-url">
+                  </div>
+
+                  <button type="submit" class="btn btn-success btn-block mt-4">
+                    Save Business Credentials <i class="fa-solid fa-floppy-disk"></i>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Admin Credentials Card -->
+              <div class="card p-4">
+                <h3><i class="fa-solid fa-user-shield text-accent"></i> Admin Profile & Security</h3>
+                <p class="text-muted small mt-1">Update your administrative login email address and secure password.</p>
+                
+                <form id="admin-credentials-form" class="mt-4">
+                  <div class="form-group">
+                    <label for="admin-setting-email">Admin Email ID</label>
+                    <input type="email" id="admin-setting-email" placeholder="admin@gayaji.com" required class="form-control">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="admin-setting-password">New Password (optional)</label>
+                    <input type="password" id="admin-setting-password" placeholder="••••••••" minlength="6" class="form-control">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="admin-setting-confirm-password">Confirm Password</label>
+                    <input type="password" id="admin-setting-confirm-password" placeholder="••••••••" class="form-control">
+                  </div>
+
+                  <button type="submit" class="btn btn-primary btn-block mt-4">
+                    Update Admin Credentials <i class="fa-solid fa-key"></i>
+                  </button>
+                </form>
+              </div>
+
+              <!-- Privilege Transfer Card -->
+              <div class="card p-4 border-danger">
+                <h3 class="text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Danger Area: Transfer Admin Rights</h3>
+                <p class="mt-2 text-muted small">
+                  Transferring owner admin rights will promote the selected user to <strong>Admin</strong> role, and immediately demote your own account to a standard <strong>Customer</strong> role. This action is irreversible unless the new admin promotes you back.
+                </p>
+                
+                <form id="admin-transfer-form" class="mt-4">
+                  <div class="form-group">
+                    <label for="transfer-user-select">Select New Admin User:</label>
+                    <select id="transfer-user-select" required class="form-control">
+                      <option value="">-- Choose User --</option>
+                      <!-- Dynamically populated with all registered users -->
+                    </select>
+                  </div>
+                  
+                  <div class="checkbox-confirm mt-3 small">
+                    <label style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                      <input type="checkbox" id="transfer-confirm-checkbox" required style="margin-top: 3px;">
+                      <span>I understand I will lose administrative power and my account will be demoted to Customer.</span>
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn btn-danger btn-block mt-4" id="transfer-admin-btn" disabled>
+                    Execute Admin Rights Transfer <i class="fa-solid fa-right-left"></i>
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: Delivery Portal -->
+    <section id="view-delivery" class="spa-view d-none">
+      <h2 class="section-title"><i class="fa-solid fa-motorcycle text-success"></i> Delivery Agent Console</h2>
+      
+      <div class="delivery-welcome-banner">
+        <div>
+          <h3>Hello, <span id="delivery-agent-name">Ramesh Kumar</span></h3>
+          <p>Please review and complete your active delivery route below. Keep safe on the road!</p>
+        </div>
+        <div class="delivery-status-pill">Active Agent</div>
+      </div>
+
+      <div class="delivery-tasks-section mt-4">
+        <h4>Assigned Deliveries</h4>
+        
+        <div id="delivery-loader" class="loading-spinner-container">
+          <div class="spinner"></div>
+          <p>Routing active tasks...</p>
+        </div>
+
+        <div id="delivery-tasks-list" class="delivery-tasks-list d-none">
+          <!-- Dynamically populated tasks -->
+        </div>
+
+        <div id="delivery-empty-state" class="orders-empty-state d-none">
+          <i class="fa-solid fa-thumbs-up"></i>
+          <h3>All deliveries completed!</h3>
+          <p>There are no active orders assigned to you right now. Sit back and relax!</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Dynamic Modal: Add/Edit Product -->
+  <div class="modal-overlay d-none" id="product-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="product-modal-title">Add New Product</h3>
+        <button class="close-modal-btn" id="close-product-modal-btn">&times;</button>
+      </div>
+      <form id="product-form">
+        <input type="hidden" id="prod-id">
+        <div class="form-group">
+          <label for="prod-name">Product Name</label>
+          <input type="text" id="prod-name" required placeholder="e.g. Professional Digital Air Fryer (5.5L)">
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="prod-category">Category</label>
+            <select id="prod-category" required>
+              <option value="Kitchen Appliances">Kitchen Appliances</option>
+              <option value="Home Appliances">Home Appliances</option>
+              <option value="Smart Living">Smart Living</option>
+            </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="prod-price">Price (₹)</label>
+            <input type="number" id="prod-price" required min="1" placeholder="e.g. 6499">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label for="prod-stock">Stock Quantity</label>
+            <input type="number" id="prod-stock" required min="0" placeholder="e.g. 20">
+          </div>
+          <div class="form-group col-6">
+            <label>Product Photo</label>
+            <div class="image-upload-wrapper">
+              <div class="image-upload-zone" id="image-upload-zone">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Choose photo or drag here</span>
+                <input type="file" id="prod-image-file" accept="image/*" style="display:none">
+              </div>
+              <div class="image-upload-preview d-none" id="image-upload-preview">
+                <img src="" id="upload-preview-img" alt="Preview">
+                <button type="button" class="btn-remove-preview" id="btn-remove-preview">&times;</button>
+              </div>
+            </div>
+            <input type="hidden" id="prod-image">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="prod-desc">Description</label>
+          <textarea id="prod-desc" rows="3" placeholder="Write full product specifications..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancel-product-modal">Cancel</button>
+          <button type="submit" class="btn btn-success" id="btn-save-product-modal">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dynamic Modal: OTP Verification -->
+  <div class="modal-overlay d-none" id="otp-modal">
+    <div class="modal-card modal-small text-center" style="max-width: 400px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); background-color: var(--bg-secondary);">
+      <div class="modal-header" style="justify-content: center; position: relative;">
+        <h3>Security Verification</h3>
+        <button class="close-modal-btn" id="close-otp-modal-btn" style="position: absolute; right: 1.5rem;">&times;</button>
+      </div>
+      <div class="modal-body p-4" style="display: flex; flex-direction: column; align-items: center;">
+        <div class="otp-icon-wrapper" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem; animation: pulse 2s infinite;">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h4>Enter Verification OTP</h4>
+        <p class="text-muted small mt-2" style="text-align: center;">A 4-digit security code has been sent to your phone: <strong id="otp-phone-display"></strong></p>
+        
+        <div class="otp-input-container mt-4">
+          <input type="text" id="otp-code-input" maxlength="4" placeholder="••••" autocomplete="off" style="text-align: center; font-size: 2.25rem; letter-spacing: 0.5rem; width: 180px; padding: 0.5rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); outline: none; background-color: var(--bg-primary); color: var(--text-primary); transition: border-color 0.2s;">
+        </div>
+        
+        <div class="otp-actions mt-4" style="width: 100%;">
+          <button class="btn btn-success btn-block btn-lg" id="otp-submit-btn" style="width: 100%;">Verify & Place Order</button>
+          <button class="btn btn-outline btn-block mt-2" id="otp-resend-btn" style="width: 100%;">Resend SMS OTP</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Modal: Online Payment Gateway Simulator -->
+  <div class="modal-overlay d-none" id="payment-modal">
+    <div class="payment-gateway-card">
+      <div class="gateway-header">
+        <div class="gateway-brand">
+          <i class="fa-solid fa-shield-halved text-success"></i>
+          <span>Secure Online Pay Gateway</span>
+        </div>
+        <span class="gateway-timer" id="payment-timer">05:00</span>
+      </div>
+
+      <div class="gateway-body">
+        
+        <!-- Step A: Loading / Initializing -->
+        <div class="payment-stage text-center" id="payment-stage-init">
+          <div class="spinner spinner-large"></div>
+          <p class="mt-3">Connecting to bank servers...</p>
+        </div>
+
+        <!-- Step B: Enter Payment Credentials or Scan QR -->
+        <div class="payment-stage d-none" id="payment-stage-input">
+          <div class="order-pay-amount-banner">
+            <span>Amount to Pay</span>
+            <strong id="payment-amount-text">₹0</strong>
+          </div>
+          
+          <div class="payment-tabs-header mt-3">
+            <button class="pay-tab-btn active" data-pay-tab="pay-tab-qr"><i class="fa-solid fa-qrcode"></i> UPI QR Scan</button>
+            <button class="pay-tab-btn" data-pay-tab="pay-tab-card"><i class="fa-solid fa-credit-card"></i> Card Info</button>
+          </div>
+          
+          <div class="payment-tabs-body mt-3">
+            <!-- QR Tab -->
+            <div class="pay-tab-content text-center" id="pay-tab-qr">
+              <p class="text-muted small">Scan this UPI QR code using GPay, PhonePe, Paytm, or any BHIM UPI app.</p>
+              <div class="qr-mock-code" id="checkout-qr-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); max-width: 250px; margin: 1rem auto; background: var(--bg-primary);">
+                <!-- Fallback Icon / Custom Image -->
+                <i class="fa-solid fa-qrcode" id="checkout-qr-fallback-icon" style="font-size: 5rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                <img src="" id="checkout-qr-custom-img" class="d-none" style="max-width: 150px; display: block; margin: 0 auto 1rem auto; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                <div class="qr-target-marker" id="checkout-qr-merchant-name" style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">Gaya Ji Merchant</div>
+              </div>
+              <p class="qr-timer-subtitle">QR will expire in <span class="text-danger">5 mins</span></p>
+            </div>
+            
+            <!-- Card Tab -->
+            <div class="pay-tab-content d-none" id="pay-tab-card">
+              <form id="gateway-card-form">
+                <div class="form-group">
+                  <label>Cardholder Name</label>
+                  <input type="text" placeholder="Amit Sharma" required class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Card Number</label>
+                  <input type="text" placeholder="4111 2222 3333 4444" required pattern="[0-9 ]{16,19}" class="form-control">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label>Expiry Date</label>
+                    <input type="text" placeholder="MM/YY" required pattern="[0-9/]{5}" class="form-control">
+                  </div>
+                  <div class="form-group col-6">
+                    <label>CVV / CVC</label>
+                    <input type="password" placeholder="•••" required pattern="[0-9]{3}" class="form-control">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <button class="btn btn-success btn-block btn-lg mt-4" id="gateway-submit-pay-btn">
+            Simulate Payment Success <i class="fa-solid fa-lock"></i>
+          </button>
+          <button class="btn btn-block btn-outline mt-2 text-danger" id="gateway-cancel-pay-btn">
+            Cancel Payment
+          </button>
+        </div>
+
+        <!-- Step C: Processing payment -->
+        <div class="payment-stage text-center d-none" id="payment-stage-processing">
+          <div class="spinner spinner-large text-primary"></div>
+          <h4 class="mt-3">Authorizing Transaction...</h4>
+          <p class="text-muted small mt-1">Please do not refresh the page or click back.</p>
+        </div>
+
+        <!-- Step D: Completed payment -->
+        <div class="payment-stage text-center d-none" id="payment-stage-success">
+          <div class="success-checkmark-circle">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h3 class="text-success mt-3">Payment Successful!</h3>
+          <p class="text-muted small mt-1">Bank Auth Code: <strong id="gateway-auth-code">TXT9837B83</strong></p>
+          <p class="mt-3 text-muted">Directing you back to complete order...</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Modal: Order Tracking Detail Popup -->
+  <div class="modal-overlay d-none" id="order-tracking-modal">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h3>Order Invoice & Tracking</h3>
+        <button class="close-modal-btn" id="close-tracking-modal-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="tracking-modal-content">
+        <!-- Dynamically loaded order details -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Center popup alerts -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-col brand-col">
+        <div class="logo">
+          <i class="fa-solid fa-plug-circle-bolt text-accent"></i>
+          <h2>Gaya Ji Traders</h2>
+        </div>
+        <p class="mt-2">Premium quality home appliances, smart kitchen electronics, and smart living appliances. Sourced from top brands, delivered directly to your doorstep.<br><strong>All types of electronic appliances and home appliances are available.</strong></p>
+      </div>
+      <div class="footer-col links-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#shop">Shop Electronics</a></li>
+          <li><a href="#login">My Account</a></li>
+          <li><a href="#orders">Track Order</a></li>
+        </ul>
+      </div>
+      <div class="footer-col location-col">
+        <h3>Contact & Location</h3>
+        <p><i class="fa-solid fa-location-dot text-accent"></i> Address: TOWER CHOWK NEAR KIRAN CINEMA AT RADHA MARKET GAYA</p>
+        <p><i class="fa-solid fa-phone text-accent"></i> Support & WhatsApp: +91 62073 42872</p>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Gaya Ji Traders. Crafted with local pride. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Vanilla Javascript App Script Logic -->
+  <script src="/app.js"></script>
+</body>
+</html>
