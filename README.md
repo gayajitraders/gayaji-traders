@@ -25,7 +25,7 @@ Gaya Ji Traders is a modern, high-performance E-Commerce application designed to
 
 * **Frontend**: Vanilla HTML5, CSS3 (harmony dark modes, dynamic layouts), Modern JS (ES6+).
 * **Backend**: Node.js, Express.js, JWT Authentication, bcryptjs.
-* **Database**: Lightweight File-based JSON Database (`localDb.js`) located in `backend/data/`.
+* **Database**: Hybrid Database (Lightweight File-based JSON Database or Cloud MongoDB Atlas).
 * **Deployment**: Docker, Google Cloud Run, Google Search Sitemap (`sitemap.xml`).
 
 ---
@@ -35,16 +35,16 @@ Gaya Ji Traders is a modern, high-performance E-Commerce application designed to
 To run the application locally, follow these steps:
 
 ### 1. Install Dependencies
-Open your terminal in the `backend` directory and run:
+Open your terminal in the root directory and run:
 ```bash
-cd backend
-npm install
+npm run install-all
 ```
+*(This will automatically install all node modules for the backend).*
 
 ### 2. Start the Server
-Start the Express server using node:
+Start the Express server directly from the root directory:
 ```bash
-node server.js
+npm start
 ```
 The server will boot up and listen on port `5000`:
 `Server is running on port 5000`
@@ -57,6 +57,14 @@ Open your browser and navigate to:
 
 ---
 
+## 🗄️ Database Configurations (Advance Level)
+
+The database layer supports **hybrid storage** for seamless development and production deployment:
+* **Local Mode (Default)**: If no environment variable is provided, the database runs locally on JSON files inside `backend/data/`. No setup is required.
+* **Production Mode (MongoDB Atlas)**: To persist data in a cloud database, set the `MONGODB_URI` environment variable. The backend will automatically sync and persist all records (users, products, orders, coupons, settings) to your MongoDB Atlas cluster in the background.
+
+---
+
 ## ☁️ Google Cloud Run Deployment
 
 Google Cloud Run is a fully managed serverless platform perfect for running this containerized Express backend.
@@ -66,8 +74,9 @@ To deploy the app to Google Cloud:
 1. **Install GCloud CLI**: Ensure you have the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) installed and configured on your machine.
 2. **Build and Deploy**: Run the following command from the root directory of this repository:
    ```bash
-   gcloud run deploy gayaji-traders --source . --port 5000 --allow-unauthenticated --region us-central1
+   gcloud run deploy gayaji-traders --source . --allow-unauthenticated --region us-central1
    ```
+   *(The Dockerfile will dynamically bind to the port assigned by Google Cloud Run, usually `8080`).*
 3. Once completed, Google Cloud Run will return your live HTTPS URL (e.g. `https://gayaji-traders-xyz.a.run.app`).
 
 ---
