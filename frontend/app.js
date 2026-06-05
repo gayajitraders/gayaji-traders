@@ -2384,10 +2384,30 @@ async function handleAdminTransfer(e) {
 }
 
 // --- Notifications Center ---
+let isInitialNotifPoll = true;
+
 async function pollNotifications() {
-  if (!state.token) return;
+  if (!state.token) {
+    isInitialNotifPoll = true;
+    return;
+  }
   try {
     const notifications = await apiCall('/notifications');
+    
+    // Alert user / admin about new unread notifications that arrive in real-time
+    if (!isInitialNotifPoll && state.notifications && state.notifications.length > 0) {
+      notifications.forEach(n => {
+        if (!n.read) {
+          const alreadyExists = state.notifications.some(old => old._id === n._id);
+          if (!alreadyExists) {
+            // New unread notification detected! Alert with a Toast Notification
+            showToast(n.message, n.type === 'order' ? 'info' : 'success');
+          }
+        }
+      });
+    }
+    
+    isInitialNotifPoll = false;
     state.notifications = notifications;
     renderNotifications();
   } catch (err) {
