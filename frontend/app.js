@@ -198,6 +198,14 @@ function router() {
       }
     });
 
+    // Highlight mobile bottom nav
+    document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href') === targetView) {
+        item.classList.add('active');
+      }
+    });
+
     // Execute route renderer
     const routeHandler = routes[targetView];
     if (routeHandler) {

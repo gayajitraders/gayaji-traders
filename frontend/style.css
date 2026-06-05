@@ -3512,3 +3512,218 @@ hr {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
 }
 
+/* ==========================================================================
+   Laptop Device Emulator (Mobile Screen view on Laptop/Desktop)
+   ========================================================================== */
+@media (min-width: 1025px) {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .device-emulator-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  .smartphone-frame {
+    position: relative;
+    width: 412px;
+    height: 840px;
+    background-color: #0f172a;
+    border: 12px solid #334155;
+    border-radius: 42px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Dynamic Island Notch Simulation */
+  .smartphone-frame::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 28px;
+    background-color: #000000;
+    border-radius: 20px;
+    z-index: 9999;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+
+  /* Inner Screen */
+  .smartphone-screen {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+  }
+
+  /* Clip drawer, modals, alerts inside the phone view */
+  .modal-overlay, .modal-overlay-payment, .cart-drawer, .wishlist-drawer {
+    position: absolute !important;
+    z-index: 5000 !important;
+  }
+
+  .toast-container {
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    left: 20px !important;
+    z-index: 9999 !important;
+  }
+
+  /* Shrink header details for phone scale */
+  .main-header {
+    position: sticky !important;
+    top: 0;
+  }
+}
+
+/* Fallback for real mobile/tablet views */
+@media (max-width: 1024px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .device-emulator-wrapper, .smartphone-frame, .smartphone-screen {
+    display: contents;
+  }
+}
+
+/* Mobile Bottom Sticky Navigation Bar */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.2rem;
+  transition: color 0.2s ease;
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.mobile-nav-item i {
+  font-size: 1.15rem;
+}
+
+.mobile-nav-item:hover, .mobile-nav-item.active {
+  color: var(--primary);
+}
+
+.mobile-nav-item.active i {
+  color: var(--primary);
+}
+
+/* Hide on desktop, show only in mobile view or emulator */
+@media (min-width: 1025px) {
+  .mobile-bottom-nav {
+    position: absolute;
+  }
+  
+  .smartphone-screen {
+    padding-bottom: 60px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-main-content {
+    padding-bottom: 70px;
+  }
+  
+  .main-header .nav-menu {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .smartphone-screen .main-header .nav-menu {
+    display: none !important;
+  }
+}
+
+/* Floating WhatsApp button widget */
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #25d366;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 4500;
+  transition: all 0.3s ease;
+  animation: whatsapp-pulse 2s infinite;
+}
+
+.whatsapp-float-btn:hover {
+  transform: scale(1.1);
+  background-color: #128c7e;
+  color: white;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+@media (min-width: 1025px) {
+  .whatsapp-float-btn {
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+  }
+}
+

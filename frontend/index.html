@@ -16,6 +16,11 @@
 </head>
 <body>
 
+  <!-- Desktop Device Emulator Wrapper (Mobile Screen view on Laptop/Desktop) -->
+  <div class="device-emulator-wrapper">
+    <div class="smartphone-frame">
+      <div class="smartphone-screen">
+
   <!-- Top Announcement Bar -->
   <div class="announcement-bar">
     <span>✨ Use code <strong>WELCOME10</strong> for 10% off on orders above ₹500! Free delivery in Gaya city.</span>
@@ -1224,6 +1229,23 @@
   <!-- Toast Notification Center popup alerts -->
   <div class="toast-container" id="toast-container"></div>
 
+  <!-- Sticky Bottom Navigation Bar for Mobile -->
+  <div class="mobile-bottom-nav">
+    <a href="#shop" class="mobile-nav-item active"><i class="fa-solid fa-store"></i><span>Shop</span></a>
+    <a href="#orders" class="mobile-nav-item customer-only d-none"><i class="fa-solid fa-box-open"></i><span>Orders</span></a>
+    <a href="#profile" class="mobile-nav-item customer-only d-none"><i class="fa-solid fa-user-gear"></i><span>Profile</span></a>
+    <a href="#admin" class="mobile-nav-item admin-only d-none"><i class="fa-solid fa-chart-line"></i><span>Admin</span></a>
+    <a href="#delivery" class="mobile-nav-item delivery-only d-none"><i class="fa-solid fa-truck-ramp-box"></i><span>Deliveries</span></a>
+  </div>
+
+  <!-- Floating WhatsApp Chat Widget -->
+  <a href="https://wa.me/916207342872?text=Hello%20Gaya%20Ji%20Traders,%20I%20have%20an%20inquiry%20about%20my%20order." 
+     target="_blank" 
+     class="whatsapp-float-btn" 
+     title="Chat with Us on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
   <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
@@ -1253,6 +1275,10 @@
       <p>&copy; 2026 Gaya Ji Traders. Crafted with local pride. All rights reserved.</p>
     </div>
   </footer>
+
+      </div> <!-- /smartphone-screen -->
+    </div> <!-- /smartphone-frame -->
+  </div> <!-- /device-emulator-wrapper -->
 
   <!-- Vanilla Javascript App Script Logic -->
   <script src="/app.js"></script>
