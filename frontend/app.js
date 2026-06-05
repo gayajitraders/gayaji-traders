@@ -1252,6 +1252,26 @@ function closePaymentGateway() {
 }
 
 // --- Customer View: Order History & Tracking ---
+function getStatusMessage(status, history) {
+  const lastUpdate = history && history.length > 0 ? history[history.length - 1] : null;
+  const lastTime = lastUpdate ? new Date(lastUpdate.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '';
+  
+  if (status === 'Pending') return 'Order placed, awaiting confirmation';
+  if (status === 'Confirmed') return `Confirmed on ${lastTime}. Processing for dispatch.`;
+  if (status === 'Shipped') return `Shipped. Out for transit.`;
+  if (status === 'Out for Delivery') return `Out for delivery today! Keep phone handy.`;
+  if (status === 'Delivered') return `Delivered on ${lastTime}. Package was handed over directly.`;
+  if (status === 'Cancelled') return 'Order has been cancelled.';
+  return status;
+}
+
+function triggerMockInvoiceDownload(orderId) {
+  showToast('Preparing invoice document for print...', 'info');
+  setTimeout(() => {
+    window.print();
+  }, 1000);
+}
+
 async function renderOrdersView() {
   const loader = document.getElementById('orders-loader');
   const container = document.getElementById('customer-orders-list');
@@ -1262,6 +1282,15 @@ async function renderOrdersView() {
   emptyState.classList.add('d-none');
 
   try {
+    // Pre-fetch products catalog if empty to get images
+    if (state.products.length === 0) {
+      try {
+        state.products = await apiCall('/products');
+      } catch (err) {
+        console.error('Failed to pre-fetch product list for images', err);
+      }
+    }
+
     const orders = await apiCall('/orders/my-orders');
     loader.classList.add('d-none');
 
@@ -1272,7 +1301,6 @@ async function renderOrdersView() {
 
     container.classList.remove('d-none');
     container.innerHTML = orders.map(order => {
-      const itemsBrief = order.items.map(item => `${item.name} (x${item.quantity})`).join(', ');
       const orderDate = new Date(order.createdAt).toLocaleDateString('en-IN', {
         day: 'numeric',
         month: 'short',
@@ -1287,39 +1315,72 @@ async function renderOrdersView() {
       const canCancel = (order.orderStatus === 'Pending' || order.orderStatus === 'Confirmed') && (timeDiff < twoHours);
 
       const cancelBtnHtml = canCancel 
-        ? `<button class="btn btn-danger btn-sm btn-cancel-order" data-id="${order._id}" style="margin-left: 0.5rem;">
+        ? `<button class="btn btn-danger btn-sm btn-cancel-order btn-block" data-id="${order._id}">
              <i class="fa-solid fa-ban"></i> Cancel Order
            </button>`
         : '';
+
+      const itemsHtml = order.items.map(item => {
+        // Find product in state.products to get image
+        const product = state.products.find(p => p._id === item.productId);
+        const imageUrl = item.imageUrl || (product ? product.imageUrl : 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=200');
+        return `
+          <div class="order-item-row">
+            <img src="${imageUrl}" alt="${item.name}" class="order-item-thumb">
+            <div class="order-item-details">
+              <h4 class="order-item-name" onclick="window.location.hash='#product/${item.productId}'" style="cursor:pointer">${item.name}</h4>
+              <span class="order-item-sub">Price: ₹${item.price} | Qty: ${item.quantity}</span>
+              <div class="order-item-badges">
+                <span class="badge-assured"><i class="fa-solid fa-circle-check"></i> Assured</span>
+              </div>
+            </div>
+            <div class="order-item-buy-again">
+              <button class="btn btn-outline btn-sm btn-buy-again" data-product-id="${item.productId}">
+                <i class="fa-solid fa-rotate-left"></i> Buy again
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
 
       return `
         <div class="order-card">
           <div class="order-card-header">
             <div class="order-card-meta">
               <div class="meta-group">
-                <small>Order Placed</small>
+                <small>ORDER PLACED</small>
                 <span>${orderDate}</span>
               </div>
               <div class="meta-group">
-                <small>Total Amount</small>
-                <span>₹${order.total}</span>
+                <small>TOTAL</small>
+                <span class="order-total-price">₹${order.total}</span>
               </div>
               <div class="meta-group">
-                <small>Order ID</small>
-                <span>#${order._id}</span>
+                <small>SHIP TO</small>
+                <span class="ship-to-link" title="${order.address.addressLine}, ${order.address.city}">${order.address.name} <i class="fa-solid fa-chevron-down" style="font-size:0.75rem"></i></span>
               </div>
             </div>
-            <span class="order-status-pill status-${order.orderStatus.toLowerCase()}">${order.orderStatus}</span>
+            <div class="order-card-right-header">
+              <span class="order-id-label">ORDER ID #${order._id.toUpperCase()}</span>
+            </div>
           </div>
+          
           <div class="order-card-body">
-            <div class="order-details-summary">
-              <div>
-                <div class="order-items-brief"><strong>Items:</strong> ${itemsBrief}</div>
-                <div class="text-muted small mt-2"><strong>Ship to:</strong> ${order.address.name} | ${order.address.addressLine}, Gaya</div>
+            <div class="order-status-banner">
+              <span class="status-bullet bullet-${order.orderStatus.toLowerCase()}"></span>
+              <span class="status-main-text">${getStatusMessage(order.orderStatus, order.trackingHistory)}</span>
+            </div>
+            
+            <div class="order-body-grid">
+              <div class="order-items-container">
+                ${itemsHtml}
               </div>
-              <div style="display: flex; gap: 0.5rem;">
-                <button class="order-track-timeline-trigger" data-id="${order._id}">
-                  <i class="fa-solid fa-map-location"></i> Track & Invoice
+              <div class="order-actions-container">
+                <button class="btn btn-primary btn-block order-track-timeline-trigger" data-id="${order._id}">
+                  <i class="fa-solid fa-location-crosshairs"></i> Track Package
+                </button>
+                <button class="btn btn-outline btn-block btn-download-invoice" data-id="${order._id}">
+                  <i class="fa-solid fa-file-pdf"></i> Download Invoice
                 </button>
                 ${cancelBtnHtml}
               </div>
@@ -1334,6 +1395,26 @@ async function renderOrdersView() {
       btn.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.id;
         openTrackingModal(id);
+      });
+    });
+
+    container.querySelectorAll('.btn-download-invoice').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        triggerMockInvoiceDownload(id);
+      });
+    });
+
+    container.querySelectorAll('.btn-buy-again').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const prodId = e.currentTarget.dataset.productId;
+        const prod = state.products.find(p => p._id === prodId);
+        if (prod) {
+          addToCart(prod, 1);
+          toggleCart();
+        } else {
+          showToast('Product detail not found in catalog.', 'error');
+        }
       });
     });
 
@@ -1367,13 +1448,6 @@ async function openTrackingModal(orderId) {
   container.innerHTML = `<div class="text-center p-4"><div class="spinner"></div><p>Retrieving dispatch tracker...</p></div>`;
 
   try {
-    // Backend doesn't have a single order endpoint for general users, but let's check
-    // Wait, in productRoutes we had router.get('/:id'), but for orders we don't have get-single-order endpoint!
-    // Ah! Let's check orderRoutes.js.
-    // Looking at orderRoutes:
-    // GET /my-orders lists all logged-in user's orders.
-    // GET /all lists all orders for admin.
-    // So we can find the order by querying `/orders/my-orders` (or `/orders/all` if admin) and searching client-side!
     let orders = [];
     if (state.user.role === 'admin') {
       orders = await apiCall('/orders/all');
@@ -1399,15 +1473,19 @@ async function openTrackingModal(orderId) {
     let timelineHtml = '';
     if (currentStatus === 'Cancelled') {
       timelineHtml = `
-        <div class="p-3 bg-danger-light border rounded text-danger text-center">
-          <i class="fa-solid fa-ban" style="font-size:2rem"></i>
-          <h4 class="mt-2">Order Cancelled</h4>
-          <p class="small">This order has been cancelled and will not be dispatched.</p>
+        <div class="p-4 bg-danger-light border rounded text-danger text-center">
+          <i class="fa-solid fa-ban" style="font-size:2.5rem"></i>
+          <h4 class="mt-2" style="font-weight:700">Order Cancelled</h4>
+          <p class="small text-secondary mt-1">This order has been cancelled and will not be dispatched further.</p>
         </div>
       `;
     } else {
+      const percentage = activeIndex >= 0 ? (activeIndex / (steps.length - 1)) * 100 : 0;
       timelineHtml = `
         <div class="tracking-timeline">
+          <div class="tracking-timeline-line">
+            <div class="tracking-timeline-progress" style="width: ${percentage}%"></div>
+          </div>
           ${steps.map((step, idx) => {
             let stepClass = '';
             let stepTime = '';
@@ -1451,77 +1529,147 @@ async function openTrackingModal(orderId) {
     }
 
     // Invoice content items
-    const itemsHtml = order.items.map(item => `
-      <tr>
-        <td>${item.name}</td>
-        <td>₹${item.price}</td>
-        <td>${item.quantity}</td>
-        <td class="text-right">₹${item.price * item.quantity}</td>
-      </tr>
-    `).join('');
+    const itemsHtml = order.items.map(item => {
+      const product = state.products.find(p => p._id === item.productId);
+      const imageUrl = item.imageUrl || (product ? product.imageUrl : 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=200');
+      return `
+        <tr class="invoice-item-row">
+          <td style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem 0">
+            <img src="${imageUrl}" alt="${item.name}" style="width:40px; height:40px; object-fit:contain; border:1px solid var(--border-color); border-radius:4px; background:#fff">
+            <div>
+              <div style="font-weight:600">${item.name}</div>
+              <small class="text-muted">ID: ${item.productId}</small>
+            </div>
+          </td>
+          <td>₹${item.price}</td>
+          <td>${item.quantity}</td>
+          <td class="text-right">₹${item.price * item.quantity}</td>
+        </tr>
+      `;
+    }).join('');
 
     container.innerHTML = `
-      <div class="tracking-timeline-section">
-        <h4>Tracking Details</h4>
-        ${timelineHtml}
+      <div class="tracking-modal-grid">
+        <!-- Left Column: Stepper and History Feed -->
+        <div class="tracking-left-col">
+          <div class="tracking-modal-card">
+            <h4>Live Order Progress</h4>
+            ${timelineHtml}
+          </div>
+          
+          <div class="tracking-modal-card mt-3">
+            <h4>Detailed Dispatch Logs</h4>
+            <div class="dispatch-logs-timeline mt-2">
+              ${order.trackingHistory.map(h => `
+                <div class="dispatch-log-item">
+                  <div class="log-marker"><i class="fa-solid fa-circle-check"></i></div>
+                  <div class="log-info">
+                    <strong class="log-status">${h.status}</strong>
+                    <span class="log-comment">${h.comment || 'No comments left.'}</span>
+                    <small class="log-time text-muted">${new Date(h.timestamp).toLocaleString('en-IN', {
+                      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                    })}</small>
+                  </div>
+                </div>
+              `).reverse().join('')}
+            </div>
+          </div>
+        </div>
         
-        <div class="mt-3">
-          <h5>Status Feed Log</h5>
-          <ul class="text-muted small mt-1 pl-4" style="list-style-type:circle">
-            ${order.trackingHistory.map(h => `
-              <li><strong>[${new Date(h.timestamp).toLocaleTimeString()}]</strong> ${h.status} - <em>${h.comment || ''}</em></li>
-            `).reverse().join('')}
-          </ul>
-        </div>
-      </div>
-      
-      <hr class="my-4">
-
-      <div class="invoice-section">
-        <div class="d-flex justify-content-between" style="align-items:flex-start">
-          <div>
-            <h4>Invoice Details</h4>
-            <p class="small text-muted mt-1">Payment Mode: <strong>${order.paymentMode}</strong></p>
-            <p class="small text-muted">Payment Status: <span class="badge ${order.paymentStatus === 'Paid' ? 'bg-success-light text-success' : 'bg-warning-light text-warning'}">${order.paymentStatus}</span></p>
-            ${order.paymentTransactionId ? `<p class="small text-muted">Transaction ID: <code>${order.paymentTransactionId}</code></p>` : ''}
+        <!-- Right Column: Shipping Info, Payments, Invoice Summary -->
+        <div class="tracking-right-col">
+          <div class="tracking-modal-card">
+            <h4>Shipping Destination</h4>
+            <div style="font-size:0.9rem; line-height:1.4">
+              <strong style="display:block; font-size:0.95rem">${order.address.name}</strong>
+              <div class="text-secondary mt-1">${order.address.addressLine}</div>
+              <div class="text-secondary">${order.address.city}, ${order.address.state} - <strong>${order.address.pincode}</strong></div>
+              <div class="text-secondary mt-2"><i class="fa-solid fa-phone" style="font-size:0.8rem"></i> Phone: ${order.address.phone}</div>
+            </div>
           </div>
-          <div class="text-right">
-            <h5>Delivery Personnel</h5>
-            <p class="small text-success">
-              <strong>${order.deliveryBoyName || 'Assigning soon...'}</strong>
-              ${order.deliveryBoyPhone ? `<br><a href="tel:${order.deliveryBoyPhone}" class="text-muted small" style="text-decoration:none"><i class="fa-solid fa-phone"></i> ${order.deliveryBoyPhone}</a>` : ''}
-            </p>
+
+          <div class="tracking-modal-card">
+            <h4>Billing & Payment</h4>
+            <div style="font-size:0.9rem; line-height:1.4">
+              <div class="d-flex justify-content-between">
+                <span>Payment Mode:</span>
+                <strong>${order.paymentMode === 'Online' ? 'Prepaid Online UPI/Card' : 'Cash On Delivery (COD)'}</strong>
+              </div>
+              <div class="d-flex justify-content-between mt-1">
+                <span>Payment Status:</span>
+                <span class="badge ${order.paymentStatus === 'Paid' ? 'bg-success-light text-success' : 'bg-warning-light text-warning'}" style="font-weight:700">${order.paymentStatus}</span>
+              </div>
+              ${order.paymentTransactionId ? `
+                <div class="d-flex justify-content-between mt-1">
+                  <span>Transaction ID:</span>
+                  <code style="word-break:break-all">${order.paymentTransactionId}</code>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="tracking-modal-card">
+            <h4>Delivery Partner</h4>
+            <div class="delivery-agent-summary-box">
+              <div class="agent-avatar"><i class="fa-solid fa-user-ninja"></i></div>
+              <div class="agent-info">
+                <strong>${order.deliveryBoyName || 'Assigning soon...'}</strong>
+                ${order.deliveryBoyPhone ? `
+                  <a href="tel:${order.deliveryBoyPhone}" class="agent-phone-link">
+                    <i class="fa-solid fa-phone"></i> ${order.deliveryBoyPhone}
+                  </a>
+                ` : '<span class="text-muted small">Awaiting route assignment</span>'}
+              </div>
+            </div>
+          </div>
+
+          <div class="tracking-modal-card">
+            <div class="d-flex justify-content-between" style="align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:0.75rem">
+              <h4 style="margin:0; border:none; padding:0">Invoice Summary</h4>
+              <button class="btn btn-outline btn-sm btn-print-invoice-modal">
+                <i class="fa-solid fa-print"></i> Print
+              </button>
+            </div>
+            <table class="invoice-summary-table" style="width:100%; font-size:0.85rem; border-collapse:collapse">
+              <thead>
+                <tr style="border-bottom:1.5px solid var(--border-color)">
+                  <th style="text-align:left; padding-bottom:0.4rem">Item</th>
+                  <th style="padding-bottom:0.4rem">Rate</th>
+                  <th style="padding-bottom:0.4rem">Qty</th>
+                  <th style="text-align:right; padding-bottom:0.4rem">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsHtml}
+                <tr style="border-top:1.5px solid var(--border-color)">
+                  <td colspan="3" style="text-align:right; padding:0.4rem 0">Subtotal:</td>
+                  <td style="text-align:right; padding:0.4rem 0">₹${order.subtotal}</td>
+                </tr>
+                ${order.discount ? `
+                <tr>
+                  <td colspan="3" style="text-align:right; padding:0.4rem 0" class="text-success">Coupon Discount (${order.couponCode}):</td>
+                  <td style="text-align:right; padding:0.4rem 0" class="text-success">-₹${order.discount}</td>
+                </tr>
+                ` : ''}
+                <tr>
+                  <td colspan="3" style="text-align:right; padding:0.4rem 0">Delivery Charges:</td>
+                  <td style="text-align:right; padding:0.4rem 0" class="text-success">FREE</td>
+                </tr>
+                <tr style="border-top:1.5px solid var(--border-color); font-size:1rem; font-weight:700">
+                  <td colspan="3" style="text-align:right; padding:0.5rem 0">Grand Total:</td>
+                  <td style="text-align:right; padding:0.5rem 0" class="text-success">₹${order.total}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <table class="admin-table mt-3" style="box-shadow:none; border: 1px solid var(--border-color)">
-          <thead>
-            <tr>
-              <th>Product Details</th>
-              <th>Unit Price</th>
-              <th>Quantity</th>
-              <th class="text-right">Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${itemsHtml}
-            <tr style="background-color: var(--bg-primary)">
-              <td colspan="3" class="text-right"><strong>Subtotal:</strong></td>
-              <td class="text-right">₹${order.subtotal}</td>
-            </tr>
-            ${order.discount ? `
-            <tr style="background-color: var(--bg-primary)">
-              <td colspan="3" class="text-right text-success"><strong>Coupon Discount (${order.couponCode}):</strong></td>
-              <td class="text-right text-success">-₹${order.discount}</td>
-            </tr>` : ''}
-            <tr style="background-color: var(--bg-primary); font-size:1.1rem">
-              <td colspan="3" class="text-right"><strong>Grand Total:</strong></td>
-              <td class="text-right text-success"><strong>₹${order.total}</strong></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     `;
+
+    // Hook up print inside tracking details modal
+    container.querySelector('.btn-print-invoice-modal').addEventListener('click', () => {
+      triggerMockInvoiceDownload(orderId);
+    });
 
   } catch (err) {
     container.innerHTML = `<p class="text-danger">Failed to fetch tracking details: ${err.message}</p>`;
