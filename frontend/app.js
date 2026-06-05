@@ -167,9 +167,8 @@ function router() {
     paramId = hash.split('/')[1];
   }
 
-  // Auth Guardchecks
-  if (['#checkout', '#orders', '#profile'].includes(targetView) && !state.token) {
-    showToast('Please login to access this page.', 'info');
+  // Auth Guardchecks (Mandatory Login Wall)
+  if (!state.token && targetView !== '#login' && targetView !== '#register') {
     window.location.hash = '#login';
     return;
   }
@@ -977,6 +976,9 @@ async function handleCheckoutAddAddress(e) {
 let generatedOtp = null;
 let otpSuccessCallback = null;
 
+// --- OTP Code Variables ---
+let generatedOtp2 = null; // Second OTP for dual verification
+
 function triggerCheckoutOtpFlow(onSuccess) {
   otpSuccessCallback = onSuccess;
   generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
@@ -987,6 +989,15 @@ function triggerCheckoutOtpFlow(onSuccess) {
   const descEl = document.querySelector('#otp-modal p');
   if (descEl) {
     descEl.innerHTML = `A 4-digit security code has been sent to your phone: <strong id="otp-phone-display">${maskedPhone}</strong>`;
+  }
+  
+  const label1 = document.getElementById('otp-label-1');
+  if (label1) {
+    label1.style.display = 'none';
+  }
+  const group2 = document.getElementById('otp-group-2');
+  if (group2) {
+    group2.classList.add('d-none');
   }
   
   const submitBtn = document.getElementById('otp-submit-btn');
@@ -1019,6 +1030,15 @@ function triggerRegisterOtpFlow(phone, onSuccess) {
     descEl.innerHTML = `A 4-digit security code has been sent to your phone: <strong id="otp-phone-display">${maskedPhone}</strong>`;
   }
   
+  const label1 = document.getElementById('otp-label-1');
+  if (label1) {
+    label1.style.display = 'none';
+  }
+  const group2 = document.getElementById('otp-group-2');
+  if (group2) {
+    group2.classList.add('d-none');
+  }
+  
   const submitBtn = document.getElementById('otp-submit-btn');
   if (submitBtn) {
     submitBtn.textContent = 'Verify & Register';
@@ -1038,21 +1058,87 @@ function triggerRegisterOtpFlow(phone, onSuccess) {
   document.getElementById('otp-modal').classList.remove('d-none');
 }
 
-function triggerAdminTransferOtpFlow(targetEmail, onSuccess) {
+function triggerAdminTransferOtpFlow(targetEmail, targetPhone, onSuccess) {
   otpSuccessCallback = onSuccess;
-  generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+  generatedOtp = Math.floor(100000 + Math.random() * 900000).toString(); // Email code (6-digit)
+  generatedOtp2 = Math.floor(1000 + Math.random() * 9000).toString(); // Mobile code (4-digit)
   
   const email = targetEmail || 'admin@gayaji.com';
+  const phone = targetPhone || '6207342872';
   const maskedEmail = email.substring(0, 3) + '••••@' + email.split('@')[1];
+  const maskedPhone = phone.substring(0, 3) + '••••' + phone.substring(phone.length - 3);
 
   const descEl = document.querySelector('#otp-modal p');
   if (descEl) {
-    descEl.innerHTML = `A 6-digit security code has been sent to the target user's email: <strong id="otp-phone-display">${maskedEmail}</strong>`;
+    descEl.innerHTML = `To transfer owner admin privileges, enter both verification codes sent to the new owner.`;
+  }
+  
+  const label1 = document.getElementById('otp-label-1');
+  if (label1) {
+    label1.style.display = 'block';
+    label1.textContent = `Email Verification OTP (sent to ${maskedEmail})`;
+  }
+  const codeInput = document.getElementById('otp-code-input');
+  if (codeInput) {
+    codeInput.maxLength = 6;
+    codeInput.placeholder = '••••••';
+  }
+
+  const group2 = document.getElementById('otp-group-2');
+  if (group2) {
+    group2.classList.remove('d-none');
+  }
+  const label2 = document.getElementById('otp-label-2');
+  if (label2) {
+    label2.textContent = `Mobile Verification OTP (sent to +91 ${maskedPhone})`;
+  }
+  const codeInput2 = document.getElementById('otp-code-input-2');
+  if (codeInput2) {
+    codeInput2.maxLength = 4;
+    codeInput2.placeholder = '••••';
+    codeInput2.value = '';
+  }
+
+  const submitBtn = document.getElementById('otp-submit-btn');
+  if (submitBtn) {
+    submitBtn.textContent = 'Verify & Transfer Admin Rights';
+  }
+
+  setTimeout(() => {
+    showToast(`✉️ EMAIL-OTP: Simulated Email OTP is ${generatedOtp}`, 'info');
+    showToast(`📱 MOBILE-OTP: Simulated SMS OTP is ${generatedOtp2}`, 'info');
+  }, 800);
+
+  document.getElementById('otp-code-input').value = '';
+  document.getElementById('otp-modal').classList.remove('d-none');
+}
+
+function triggerAdminLoginOtpFlow(token, user) {
+  otpSuccessCallback = () => {
+    saveSession(token, user);
+    showToast(`Welcome back, ${user.name}!`, 'success');
+    window.location.hash = '#admin';
+  };
+  
+  generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+  
+  const descEl = document.querySelector('#otp-modal p');
+  if (descEl) {
+    descEl.innerHTML = `Administrator Account 2FA required. Enter the 6-digit OTP code sent to your registered mobile/email. <br><small class="text-muted">(Simulated code is printed in the browser developer console for security)</small>`;
+  }
+  
+  const label1 = document.getElementById('otp-label-1');
+  if (label1) {
+    label1.style.display = 'none';
+  }
+  const group2 = document.getElementById('otp-group-2');
+  if (group2) {
+    group2.classList.add('d-none');
   }
   
   const submitBtn = document.getElementById('otp-submit-btn');
   if (submitBtn) {
-    submitBtn.textContent = 'Verify & Transfer Admin Rights';
+    submitBtn.textContent = 'Verify Admin Identity';
   }
 
   const codeInput = document.getElementById('otp-code-input');
@@ -1061,8 +1147,48 @@ function triggerAdminTransferOtpFlow(targetEmail, onSuccess) {
     codeInput.placeholder = '••••••';
   }
 
+  // Log OTP only in console to prevent normal users/guests seeing it on screen
+  console.log(`🔒 [ADMIN 2FA CODE] OTP generated at ${new Date().toLocaleTimeString()} is: ${generatedOtp}`);
+  showToast(`🔒 Security notification sent to Admin's registered channels.`, 'info');
+
+  document.getElementById('otp-code-input').value = '';
+  document.getElementById('otp-modal').classList.remove('d-none');
+}
+
+function triggerDeliveryOtpFlow(orderId, phone, onSuccess) {
+  otpSuccessCallback = onSuccess;
+  generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+  
+  const displayPhone = phone || 'Customer Phone';
+  const maskedPhone = displayPhone.length >= 10 ? (displayPhone.substring(0, 3) + '••••' + displayPhone.substring(displayPhone.length - 3)) : displayPhone;
+
+  const descEl = document.querySelector('#otp-modal p');
+  if (descEl) {
+    descEl.innerHTML = `Please ask the customer for the 4-digit delivery verification OTP sent to: <strong id="otp-phone-display">${maskedPhone}</strong>`;
+  }
+  
+  const label1 = document.getElementById('otp-label-1');
+  if (label1) {
+    label1.style.display = 'none';
+  }
+  const group2 = document.getElementById('otp-group-2');
+  if (group2) {
+    group2.classList.add('d-none');
+  }
+  
+  const submitBtn = document.getElementById('otp-submit-btn');
+  if (submitBtn) {
+    submitBtn.textContent = 'Verify & Complete Delivery';
+  }
+
+  const codeInput = document.getElementById('otp-code-input');
+  if (codeInput) {
+    codeInput.maxLength = 4;
+    codeInput.placeholder = '••••';
+  }
+
   setTimeout(() => {
-    showToast(`✉️ SECURE-AUTH: Your 6-digit 2FA verification code is ${generatedOtp}.`, 'info');
+    showToast(`🔑 CUSTOMER-SMS: Simulated SMS sent to ${displayPhone}: "Your delivery verification code is ${generatedOtp}."`, 'info');
   }, 800);
 
   document.getElementById('otp-code-input').value = '';
@@ -1117,6 +1243,7 @@ async function checkoutOrder() {
     const finalAmount = Math.max(0, subtotal - discount);
 
     openPaymentGateway(finalAmount, async (transactionId) => {
+      showToast('💳 UPI Payment verified! Recording order...', 'info');
       try {
         const order = await apiCall('/orders', 'POST', {
           items,
@@ -1182,6 +1309,11 @@ async function openPaymentGateway(amount, onSuccess) {
     } else if (qrCustomImg && qrFallbackIcon) {
       qrCustomImg.classList.add('d-none');
       qrFallbackIcon.classList.remove('d-none');
+    }
+
+    const bankAccDisplay = document.getElementById('checkout-bank-acc-display');
+    if (bankAccDisplay) {
+      bankAccDisplay.textContent = settings.accountNumber || '987654321098';
     }
   } catch (err) {
     console.error('Failed to load merchant settings for checkout:', err);
@@ -1834,7 +1966,7 @@ async function renderDeliveryView() {
             <label class="small text-muted font-weight-bold">Update Dispatch Status:</label>
             ${selectHtml}
             <input type="text" class="form-control mt-2" placeholder="Comment (e.g. Call before arrival)" id="comment-${order._id}">
-            <button class="btn btn-primary btn-sm mt-2 btn-update-delivery" data-id="${order._id}">
+            <button class="btn btn-primary btn-sm mt-2 btn-update-delivery" data-id="${order._id}" data-phone="${order.address.phone}">
               Apply Status Update <i class="fa-solid fa-chevron-right"></i>
             </button>
           </div>
@@ -1846,12 +1978,26 @@ async function renderDeliveryView() {
     listContainer.querySelectorAll('.btn-update-delivery').forEach(btn => {
       btn.addEventListener('click', async (e) => {
         const id = e.currentTarget.dataset.id;
+        const phone = e.currentTarget.dataset.phone;
         const select = listContainer.querySelector(`select[data-id="${id}"]`);
         const status = select.value;
         const comment = listContainer.querySelector(`#comment-${id}`).value.trim();
 
         if (!status) {
           showToast('Please select a target status first.', 'error');
+          return;
+        }
+
+        if (status === 'Delivered') {
+          triggerDeliveryOtpFlow(id, phone, async () => {
+            try {
+              await apiCall(`/orders/${id}/status`, 'PUT', { status, comment });
+              showToast(`Order status updated to: ${status}`, 'success');
+              renderDeliveryView();
+            } catch (err) {
+              showToast('Update failed: ' + err.message, 'error');
+            }
+          });
           return;
         }
 
@@ -2369,8 +2515,8 @@ async function handleAdminTransfer(e) {
     return;
   }
 
-  // Intercept with 2FA 6-digit OTP verification
-  triggerAdminTransferOtpFlow(targetUserObj.email, async () => {
+  // Intercept with 2FA Email & Mobile OTP verification
+  triggerAdminTransferOtpFlow(targetUserObj.email, targetUserObj.phone, async () => {
     try {
       const res = await apiCall('/auth/admin-transfer', 'POST', { targetUserId });
       showToast(res.message, 'success');
@@ -2477,6 +2623,86 @@ async function markAllNotificationsRead() {
   } catch (err) {
     console.error('Failed reading all alerts:', err);
   }
+}
+
+let sliderInterval = null;
+let currentSlideIndex = 0;
+
+function initHeroSlider() {
+  const slider = document.querySelector('.hero-slider');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.slide');
+  const dots = slider.querySelectorAll('.slider-dot');
+  const prevBtn = document.getElementById('slider-prev-btn');
+  const nextBtn = document.getElementById('slider-next-btn');
+
+  if (slides.length === 0) return;
+
+  function showSlide(index) {
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+    
+    currentSlideIndex = index;
+
+    slides.forEach((slide, i) => {
+      if (i === currentSlideIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    dots.forEach((dot, i) => {
+      if (i === currentSlideIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  function startAutoSlide() {
+    stopAutoSlide();
+    sliderInterval = setInterval(() => {
+      showSlide(currentSlideIndex + 1);
+    }, 4000);
+  }
+
+  function stopAutoSlide() {
+    if (sliderInterval) {
+      clearInterval(sliderInterval);
+      sliderInterval = null;
+    }
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      showSlide(currentSlideIndex - 1);
+      startAutoSlide();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      showSlide(currentSlideIndex + 1);
+      startAutoSlide();
+    });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const index = parseInt(e.target.dataset.index);
+      showSlide(index);
+      startAutoSlide();
+    });
+  });
+
+  showSlide(0);
+  startAutoSlide();
+
+  slider.addEventListener('mouseenter', stopAutoSlide);
+  slider.addEventListener('mouseleave', startAutoSlide);
 }
 
 // --- DOM Event Listeners & Bootstrapping ---
@@ -2667,20 +2893,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('otp-submit-btn').addEventListener('click', () => {
     const code = document.getElementById('otp-code-input').value.trim();
-    if (code === generatedOtp) {
-      document.getElementById('otp-modal').classList.add('d-none');
-      showToast('OTP verified successfully!', 'success');
-      if (otpSuccessCallback) {
-        otpSuccessCallback();
+    const group2Visible = !document.getElementById('otp-group-2').classList.contains('d-none');
+
+    if (group2Visible) {
+      const code2 = document.getElementById('otp-code-input-2').value.trim();
+      if (code === generatedOtp && code2 === generatedOtp2) {
+        document.getElementById('otp-modal').classList.add('d-none');
+        showToast('Both OTP codes verified successfully!', 'success');
+        if (otpSuccessCallback) {
+          otpSuccessCallback();
+        }
+      } else {
+        showToast('Invalid verification codes. Please try again.', 'error');
       }
     } else {
-      showToast('Invalid OTP. Please try again.', 'error');
+      if (code === generatedOtp) {
+        document.getElementById('otp-modal').classList.add('d-none');
+        showToast('OTP verified successfully!', 'success');
+        if (otpSuccessCallback) {
+          otpSuccessCallback();
+        }
+      } else {
+        showToast('Invalid OTP. Please try again.', 'error');
+      }
     }
   });
 
   document.getElementById('otp-resend-btn').addEventListener('click', () => {
-    generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-    showToast(`🔑 GT-SECURE: Your new verification OTP is ${generatedOtp}.`, 'info');
+    const group2Visible = !document.getElementById('otp-group-2').classList.contains('d-none');
+    if (group2Visible) {
+      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      generatedOtp2 = Math.floor(1000 + Math.random() * 9000).toString();
+      showToast(`✉️ EMAIL-OTP: Your new email OTP is ${generatedOtp}`, 'info');
+      showToast(`📱 MOBILE-OTP: Your new mobile OTP is ${generatedOtp2}`, 'info');
+    } else {
+      const maxLen = parseInt(document.getElementById('otp-code-input').maxLength || '4');
+      if (maxLen === 6) {
+        generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        const is2FA = document.querySelector('#otp-modal p').innerHTML.includes('2FA');
+        if (is2FA) {
+          console.log(`🔒 [ADMIN 2FA CODE] New OTP is: ${generatedOtp}`);
+          showToast(`🔒 New security notification sent to Admin's registered channels.`, 'info');
+        } else {
+          showToast(`✉️ SECURE-AUTH: Your new verification code is ${generatedOtp}.`, 'info');
+        }
+      } else {
+        generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+        showToast(`🔑 GT-SECURE: Your new verification OTP is ${generatedOtp}.`, 'info');
+      }
+    }
   });
 
   // Simulated gateway triggers
@@ -2903,16 +3164,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const res = await apiCall('/auth/login', 'POST', { email, password });
-      saveSession(res.token, res.user);
-      showToast(`Welcome back, ${res.user.name}!`, 'success');
       
-      // Route based on role
       if (res.user.role === 'admin') {
-        window.location.hash = '#admin';
-      } else if (res.user.role === 'delivery') {
-        window.location.hash = '#delivery';
+        triggerAdminLoginOtpFlow(res.token, res.user);
       } else {
-        window.location.hash = '#shop';
+        saveSession(res.token, res.user);
+        showToast(`Welcome back, ${res.user.name}!`, 'success');
+        if (res.user.role === 'delivery') {
+          window.location.hash = '#delivery';
+        } else {
+          window.location.hash = '#shop';
+        }
       }
     } catch (err) {
       errorEl.textContent = err.message;
@@ -2974,6 +3236,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Bootstrapping
   updateNavigation();
   router();
+  initHeroSlider();
 
   // Load initial profile details if session already exists
   if (state.token) {

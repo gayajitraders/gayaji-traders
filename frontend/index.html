@@ -211,18 +211,47 @@
     
     <!-- SECTION 1: Shop View -->
     <section id="view-shop" class="spa-view">
-      <!-- Hero Banner Banner -->
-      <div class="shop-hero">
-        <div class="hero-content">
-          <span class="badge-hero">⚡ Gaya Ji's Premium Electronics Hub</span>
-          <h2>Premium Home & Kitchen Appliances</h2>
-          <p>Upgrade your home with high-performance kitchen appliances and smart home systems. Engineered for efficiency, built for durability, and delivered fast to your doorstep in Gaya city.</p>
-          <a href="#shop" class="btn btn-accent btn-lg" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior: 'smooth'})">
-            Explore Appliances <i class="fa-solid fa-arrow-down"></i>
-          </a>
+      <!-- Premium Hero Slider (Amazon/Flipkart Look) -->
+      <div class="hero-slider">
+        <div class="slider-wrapper">
+          <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=80" alt="Smart TV Banner">
+            <div class="slide-content">
+              <span class="slide-badge">⚡ Special Launch Offer</span>
+              <h2>Ultra HD Smart Televisions</h2>
+              <p>Experience cinema-grade entertainment with 4K Quantum-Dot display, Dolby Atmos sound, and hands-free voice control.</p>
+              <a href="#shop" class="btn btn-accent" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior: 'smooth'})">Shop Now</a>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80" alt="Smart Refrigerator Banner">
+            <div class="slide-content">
+              <span class="slide-badge">❄️ Smart Cooling Deals</span>
+              <h2>Double-Door Smart Refrigerators</h2>
+              <p>Keep your groceries fresh with AI-driven temperature control, convertible freezer compartments, and ultra-quiet inverter compressor.</p>
+              <a href="#shop" class="btn btn-accent" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior: 'smooth'})">Shop Now</a>
+            </div>
+          </div>
+          <div class="slide">
+            <img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1200&q=80" alt="Washing Machine Banner">
+            <div class="slide-content">
+              <span class="slide-badge">🧼 Home Laundry Essentials</span>
+              <h2>Front-Load Smart Washers</h2>
+              <p>Effortless laundry with active steam wash, eco-bubble technology, and customized smart cycles through your phone.</p>
+              <a href="#shop" class="btn btn-accent" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior: 'smooth'})">Shop Now</a>
+            </div>
+          </div>
         </div>
-        <div class="hero-decorative-image">
-          <i class="fa-solid fa-plug-circle-bolt"></i>
+        
+        <!-- Navigation Arrows -->
+        <button class="slider-arrow prev-arrow" id="slider-prev-btn" type="button"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-arrow next-arrow" id="slider-next-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+        
+        <!-- Bullet Indicators -->
+        <div class="slider-dots" id="slider-dots-container">
+          <span class="slider-dot active" data-index="0"></span>
+          <span class="slider-dot" data-index="1"></span>
+          <span class="slider-dot" data-index="2"></span>
         </div>
       </div>
 
@@ -1048,8 +1077,15 @@
         <h4>Enter Verification OTP</h4>
         <p class="text-muted small mt-2" style="text-align: center;">A 4-digit security code has been sent to your phone: <strong id="otp-phone-display"></strong></p>
         
-        <div class="otp-input-container mt-4">
-          <input type="text" id="otp-code-input" maxlength="4" placeholder="••••" autocomplete="off" style="text-align: center; font-size: 2.25rem; letter-spacing: 0.5rem; width: 180px; padding: 0.5rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); outline: none; background-color: var(--bg-primary); color: var(--text-primary); transition: border-color 0.2s;">
+        <div class="otp-inputs-wrapper mt-4" style="display: flex; flex-direction: column; gap: 1.25rem; width: 100%; align-items: center;">
+          <div class="otp-input-group" id="otp-group-1" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+            <label id="otp-label-1" class="small text-muted font-weight-bold" style="display: block; margin-bottom: 0.25rem;"></label>
+            <input type="text" id="otp-code-input" maxlength="4" placeholder="••••" autocomplete="off" style="text-align: center; font-size: 2rem; letter-spacing: 0.25rem; width: 220px; padding: 0.5rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); outline: none; background-color: var(--bg-primary); color: var(--text-primary); transition: border-color 0.2s;">
+          </div>
+          <div class="otp-input-group d-none" id="otp-group-2" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+            <label id="otp-label-2" class="small text-muted font-weight-bold" style="display: block; margin-bottom: 0.25rem;"></label>
+            <input type="text" id="otp-code-input-2" maxlength="4" placeholder="••••" autocomplete="off" style="text-align: center; font-size: 2rem; letter-spacing: 0.25rem; width: 220px; padding: 0.5rem; border: 2px solid var(--border-color); border-radius: var(--radius-md); outline: none; background-color: var(--bg-primary); color: var(--text-primary); transition: border-color 0.2s;">
+          </div>
         </div>
         
         <div class="otp-actions mt-4" style="width: 100%;">
@@ -1086,9 +1122,10 @@
             <strong id="payment-amount-text">₹0</strong>
           </div>
           
-          <div class="payment-tabs-header mt-3">
-            <button class="pay-tab-btn active" data-pay-tab="pay-tab-qr"><i class="fa-solid fa-qrcode"></i> UPI QR Scan</button>
-            <button class="pay-tab-btn" data-pay-tab="pay-tab-card"><i class="fa-solid fa-credit-card"></i> Card Info</button>
+          <div class="payment-tabs-header mt-3" style="display: flex; gap: 0.5rem; justify-content: center;">
+            <button class="pay-tab-btn active" data-pay-tab="pay-tab-qr" style="flex: 1;"><i class="fa-solid fa-qrcode"></i> UPI QR Scan</button>
+            <button class="pay-tab-btn" data-pay-tab="pay-tab-bank" style="flex: 1;"><i class="fa-solid fa-building-columns"></i> Bank Details</button>
+            <button class="pay-tab-btn" data-pay-tab="pay-tab-card" style="flex: 1;"><i class="fa-solid fa-credit-card"></i> Card Info</button>
           </div>
           
           <div class="payment-tabs-body mt-3">
@@ -1102,6 +1139,19 @@
                 <div class="qr-target-marker" id="checkout-qr-merchant-name" style="font-weight: 600; font-size: 1.1rem; color: var(--text-primary);">Gaya Ji Merchant</div>
               </div>
               <p class="qr-timer-subtitle">QR will expire in <span class="text-danger">5 mins</span></p>
+            </div>
+
+            <!-- Bank Details Tab -->
+            <div class="pay-tab-content d-none text-center" id="pay-tab-bank">
+              <p class="text-muted small">Transfer the exact amount to the bank account below and click verify.</p>
+              <div class="bank-details-box" style="background: var(--bg-primary); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: var(--radius-md); text-align: left; max-width: 300px; margin: 1rem auto; font-family: monospace; font-size: 0.95rem; border-left: 4px solid var(--primary);">
+                <div style="margin-bottom: 0.5rem;"><strong>Bank Name:</strong> State Bank of India</div>
+                <div style="margin-bottom: 0.5rem;"><strong>A/C Holder:</strong> Gaya Ji Traders</div>
+                <div style="margin-bottom: 0.5rem;"><strong>A/C Number:</strong> <span id="checkout-bank-acc-display" style="font-weight: bold; color: var(--primary);">987654321098</span></div>
+                <div style="margin-bottom: 0.5rem;"><strong>IFSC Code:</strong> SBIN0000021</div>
+                <div><strong>Branch:</strong> Gaya Main Branch</div>
+              </div>
+              <p class="text-info small"><i class="fa-solid fa-circle-info"></i> Instant verification will run after clicking simulate payment.</p>
             </div>
             
             <!-- Card Tab -->
